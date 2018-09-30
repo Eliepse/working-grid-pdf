@@ -238,7 +238,7 @@ class PDFWorkingGrid
             $helpSize = $hSize * .8;
             $helpOffsetY = $hSize * .1;
 
-            $this->pdf->Rect($offsetX, $offsetY, $this->maxWidth, $hSize);
+            $this->pdf->Rect($offsetX, $offsetY, $this->getWidth(), $hSize);
 
             $helpStrokes = [];
 
