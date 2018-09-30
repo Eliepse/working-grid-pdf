@@ -179,10 +179,24 @@ class PDFWorkingGrid
 
     private function getRowHeight(): float
     {
-        if ($this->linesPerPage)
-            return $this->maxHeight / $this->linesPerPage;
 
-        return ($this->maxWidth / $this->columns) + ($this->withStrokeOrder ? $this->strokesOrderBoxSize : 0);
+        // Row height calculated from columns per row
+        $heightFromColumns = ($this->maxWidth / $this->columns) + ($this->withStrokeOrder ? $this->strokesOrderBoxSize : 0);
+
+
+        if ($this->linesPerPage) {
+
+            // Row heigh calculated from lines per page
+            $heightFromLines = $this->maxHeight / $this->linesPerPage;
+
+            // If using lines require thinner row, we choose the result from it
+            if ($heightFromLines < $heightFromColumns)
+                return $heightFromLines;
+
+        }
+
+        // Otherwise, the result from columns is used
+        return $heightFromColumns;
     }
 
 
@@ -208,7 +222,7 @@ class PDFWorkingGrid
 
             $pageRowsCount++;
 
-            if (($pageRowsCount + 1) * $this->getRowHeight() >= $this->maxHeight) {
+            if (($pageRowsCount + 1) * $this->getRowHeight() > $this->maxHeight) {
                 $this->pdf->AddPage();
                 $this->drawHeader();
                 $pageRowsCount = 0;
