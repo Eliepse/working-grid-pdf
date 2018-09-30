@@ -1,0 +1,27 @@
+{
+    "name" : "eliepse/writing-grid-pdf",
+    "description" : "Library to easily create working grids and export them as PDF",
+    "type" : "library",
+    "license" : "MIT",
+    "minimum-stability" : "stable",
+    "keywords" : [
+        "pdf",
+        "working grid",
+        "chinese"
+    ],
+    "authors" : [
+        {
+            "name" : "Eliepse",
+            "email" : "contact@eliepse.fr"
+        }
+    ],
+    "require" : {
+        "tecnickcom/tcpdf" : "^6.2",
+        "php" : ">=7.1"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Eliepse\\" : "src/"
+        }
+    }
+}
