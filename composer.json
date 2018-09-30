@@ -1,5 +1,5 @@
 {
-    "name" : "eliepse/writing-grid-pdf",
+    "name" : "eliepse/working-grid-pdf",
     "description" : "Library to easily create working grids and export them as PDF",
     "type" : "library",
     "license" : "MIT",
