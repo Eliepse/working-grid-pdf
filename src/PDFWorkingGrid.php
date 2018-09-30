@@ -208,24 +208,26 @@ class PDFWorkingGrid
         $this->clear();
 
         $this->pdf->AddPage();
-
         $this->drawHeader();
-
-        $pageRowsCount = 0;
 
 //		$this->pdf->Rect((210 - $this->getWidth()) / 2, $this->bodyOffsetY, $this->getWidth(), $this->maxHeight);
 
-        /** @var Character $character */
-        foreach ($this->characters as $character) {
+        for ($i = 0, $pageRows = 1; $i < count($this->characters); $i++, $pageRows++) {
 
-            $this->drawRow($character, $this->bodyOffsetY + ($pageRowsCount * $this->getRowHeight()));
+            $character = $this->characters[ $i ];
 
-            $pageRowsCount++;
+            $this->drawRow($character, $this->bodyOffsetY + (($pageRows - 1) * $this->getRowHeight()));
 
-            if (($pageRowsCount + 1) * $this->getRowHeight() > $this->maxHeight) {
+
+            if (
+                ($this->linesPerPage && $pageRows >= $this->linesPerPage) // page break if lines per page reached
+                || ($pageRows + 1) * $this->getRowHeight() > $this->maxHeight // page break if overflow
+            ) {
+
                 $this->pdf->AddPage();
                 $this->drawHeader();
-                $pageRowsCount = 0;
+                $pageRows = 1;
+
             }
 
         }

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added lines per page support
 
+### Fixed
+- `linesPerPage` setting didn't limit number of lines on some cases
+
 ## 0.1.2 - 2018-09-30
 ### Fixed
 - Fix width of stroke order rectangle
