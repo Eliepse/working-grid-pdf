@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Refactor cell drawing
 
+### Fixed
+- Simplify lines generation to fix page breaks
+
 ## 0.2.0 - 2018-09-30
 ### Added
 - Added lines per page support

@@ -200,35 +200,37 @@ class PDFWorkingGrid
     }
 
 
+    private function getMaxLinesPerPage(): int
+    {
+        return $this->linesPerPage ?: floor($this->maxHeight / $this->getRowHeight());
+    }
+
+
     /**
      * @throws \Throwable
      */
     private function drawAll()
     {
-        $this->clear();
+        $maxLinesPerPage = $this->getMaxLinesPerPage();
+        $charactersCount = count($this->characters);
 
-        $this->pdf->AddPage();
-        $this->drawHeader();
+        $this->clear();
 
 //		$this->pdf->Rect((210 - $this->getWidth()) / 2, $this->bodyOffsetY, $this->getWidth(), $this->maxHeight);
 
-        for ($i = 0, $pageRows = 1; $i < count($this->characters); $i++, $pageRows++) {
+        for ($i = 0, $pageLinesCount = 0; $i < $charactersCount; $i++, $pageLinesCount = $i % $maxLinesPerPage) {
 
             $character = $this->characters[ $i ];
 
-            $this->drawRow($character, $this->bodyOffsetY + (($pageRows - 1) * $this->getRowHeight()));
-
-
-            if (
-                ($this->linesPerPage && $pageRows >= $this->linesPerPage) // page break if lines per page reached
-                || ($pageRows + 1) * $this->getRowHeight() > $this->maxHeight // page break if overflow
-            ) {
+            if ($pageLinesCount == 0) {
 
                 $this->pdf->AddPage();
                 $this->drawHeader();
-                $pageRows = 1;
 
             }
+
+            $this->drawRow($character, $this->bodyOffsetY + ($pageLinesCount * $this->getRowHeight()));
+
 
         }
 
@@ -241,7 +243,8 @@ class PDFWorkingGrid
      * @param float $offsetY
      * @throws \Throwable
      */
-    private function drawRow(Character $character, float $offsetY)
+    private
+    function drawRow(Character $character, float $offsetY)
     {
         $offsetX = (210 - $this->getWidth()) / 2;
         $size = $this->getCellSize();
@@ -291,7 +294,8 @@ class PDFWorkingGrid
     }
 
 
-    private function drawCell(array $strokes = null, $x, $y, $fill = "#333333")
+    private
+    function drawCell(array $strokes = null, $x, $y, $fill = "#333333")
     {
         $size = $this->getCellSize();
 
@@ -300,7 +304,8 @@ class PDFWorkingGrid
     }
 
 
-    private function getSVGTemplate(string $filename, $_args = [])
+    private
+    function getSVGTemplate(string $filename, $_args = [])
     {
         try {
 
@@ -322,7 +327,8 @@ class PDFWorkingGrid
     }
 
 
-    private function clear()
+    private
+    function clear()
     {
         $this->initPDF();
     }
@@ -331,7 +337,8 @@ class PDFWorkingGrid
     /**
      * @param bool $withStrokeOrder
      */
-    public function setWithStrokeOrder(bool $withStrokeOrder): void
+    public
+    function setWithStrokeOrder(bool $withStrokeOrder): void
     {
         $this->withStrokeOrder = $withStrokeOrder;
     }
