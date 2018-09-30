@@ -269,9 +269,6 @@ class PDFWorkingGrid
 
         }
 
-
-        $htmlBackground = $this->getSVGTemplate('svg-background.php');
-
         for ($i = 0; $i < $this->columns; $i++) {
 
             $x = ($i * $size) + $offsetX;
@@ -280,19 +277,26 @@ class PDFWorkingGrid
             if ($i > 0)
                 $fill = '#cccccc';
 
-            $this->pdf->ImageSVG("@$htmlBackground", $x, $y, $size, $size);
-
+            $this->drawCell(null, $x, $y);
 
             if ($i <= $this->models) {
 
-                $htmlCharacter = $this->getSVGTemplate('svg-stroke.php', compact('strokes', 'fill'));
-                $this->pdf->ImageSVG("@$htmlCharacter", $x, $y, $size, $size);
+                $this->drawCell($strokes, $x, $y, $fill);
 
             }
 
             $this->pdf->Rect($x, $y, $size, $size);
 
         }
+    }
+
+
+    private function drawCell(array $strokes = null, $x, $y, $fill = "#333333")
+    {
+        $size = $this->getCellSize();
+
+        $html = $this->getSVGTemplate($strokes ? 'svg-stroke.php' : 'svg-background.php', compact('strokes', 'fill'));
+        $this->pdf->ImageSVG("@$html", $x, $y, $size, $size);
     }
 
 
