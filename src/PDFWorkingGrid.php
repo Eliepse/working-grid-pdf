@@ -289,7 +289,7 @@ class PDFWorkingGrid
             ob_start();
 
             /** @noinspection PhpIncludeInspection */
-            require "../resources/templates/$filename";
+            require __DIR__ . "/../resources/templates/$filename";
 
             return ob_get_clean();
 
