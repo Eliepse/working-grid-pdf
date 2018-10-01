@@ -293,12 +293,22 @@ class PDFWorkingGrid
     }
 
 
+    /**
+     * @param array|null $strokes
+     * @param $x
+     * @param $y
+     * @param string $fill
+     * @throws Error
+     */
     private function drawCell(array $strokes = null, $x, $y, $fill = "#333333")
     {
         $size = $this->getCellSize();
 
+        $offset = $strokes ? $size * .1 : 0;
+
         $html = $this->getSVGTemplate($strokes ? 'svg-stroke.php' : 'svg-background.php', compact('strokes', 'fill'));
-        $this->pdf->ImageSVG("@$html", $x, $y, $size, $size);
+
+        $this->pdf->ImageSVG("@$html", $x + ($offset / 2), $y + ($offset / 2), $size - $offset, $size - $offset);
     }
 
 
