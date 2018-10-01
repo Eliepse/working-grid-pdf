@@ -243,8 +243,7 @@ class PDFWorkingGrid
      * @param float $offsetY
      * @throws \Throwable
      */
-    private
-    function drawRow(Character $character, float $offsetY)
+    private function drawRow(Character $character, float $offsetY)
     {
         $offsetX = (210 - $this->getWidth()) / 2;
         $size = $this->getCellSize();
@@ -294,8 +293,7 @@ class PDFWorkingGrid
     }
 
 
-    private
-    function drawCell(array $strokes = null, $x, $y, $fill = "#333333")
+    private function drawCell(array $strokes = null, $x, $y, $fill = "#333333")
     {
         $size = $this->getCellSize();
 
@@ -304,8 +302,7 @@ class PDFWorkingGrid
     }
 
 
-    private
-    function getSVGTemplate(string $filename, $_args = [])
+    private function getSVGTemplate(string $filename, $_args = [])
     {
         try {
 
@@ -327,8 +324,7 @@ class PDFWorkingGrid
     }
 
 
-    private
-    function clear()
+    private function clear()
     {
         $this->initPDF();
     }
@@ -337,8 +333,7 @@ class PDFWorkingGrid
     /**
      * @param bool $withStrokeOrder
      */
-    public
-    function setWithStrokeOrder(bool $withStrokeOrder): void
+    public function setWithStrokeOrder(bool $withStrokeOrder): void
     {
         $this->withStrokeOrder = $withStrokeOrder;
     }
