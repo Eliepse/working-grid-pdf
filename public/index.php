@@ -5,7 +5,7 @@ use Eliepse\Character;
 
 require '../vendor/autoload.php';
 
-function getStrokes(string $filename): array { return json_decode(file_get_contents("../resources/samples/strokes/$filename.json"), true); }
+function getStrokes(string $filename): array { return json_decode(file_get_contents(__DIR__ . "/../resources/samples/strokes/$filename.json"), true); }
 
 $sheet = new PDFWorkingGrid("Exemple grid", true, 9, 10);
 
