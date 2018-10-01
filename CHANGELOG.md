@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added more exemples
 
+### Changed
+- Changed proportions of characters
+
+### Fixed
+- Fixed a path in exemple
+
 ## 0.2.1 - 2018-10-01
 ### Changed
 - Refactor cell drawing
