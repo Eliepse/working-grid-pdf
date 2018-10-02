@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 ### Added
 - Added phpdocs
+- Added `download` method
+- Added `content` method
 
 ### Changed
 - Renamed a method
