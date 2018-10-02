@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Changed proportions of characters
+- Changed behaviors to be more flexible : does not work at all as previous version !
 
 ### Fixed
 - Fixed a path in exemple
