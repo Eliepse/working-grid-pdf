@@ -69,7 +69,7 @@ class WorkingGridCompiler
     }
 
 
-    private function getRowHeight(): float
+    private function getLineHeight(): float
     {
         // Row height calculated from columns per row
         $heightFromColumns = ($this->getBodyMaxWidth() / $this->grid->columns) + $this->getStrokeOrderBoxHeight();
@@ -93,7 +93,7 @@ class WorkingGridCompiler
 
     private function getCellSize(): float
     {
-        return $this->getRowHeight() - $this->getStrokeOrderBoxHeight();
+        return $this->getLineHeight() - $this->getStrokeOrderBoxHeight();
     }
 
 
@@ -116,7 +116,7 @@ class WorkingGridCompiler
             return $this->grid->linesPerPage;
 
         } else {
-            return floor($this->getBodyMaxHeight() / $this->getRowHeight());
+            return floor($this->getBodyMaxHeight() / $this->getLineHeight());
         }
 
     }
@@ -186,7 +186,7 @@ class WorkingGridCompiler
         /** @var Character $character */
         foreach ($infos->getCharacters() as $index => $character) {
 
-            $this->drawLine($character, ($index * $this->getRowHeight()) + $offsetY);
+            $this->drawLine($character, ($index * $this->getLineHeight()) + $offsetY);
 
         }
     }
