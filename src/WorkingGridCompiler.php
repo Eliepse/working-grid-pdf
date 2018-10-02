@@ -194,7 +194,7 @@ class WorkingGridCompiler
 
     private function drawLine(Character $character, float $y)
     {
-        $offsetX = (210 - $this->getBodyWidth()) / 2;
+        $offsetX = $this->grid->getPagePaddingLeft();
         $offsetY = 0;
 
         if ($this->grid->withStrokeOrder) {

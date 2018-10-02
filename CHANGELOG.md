@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - New methods to get page paddings
 
+### Fixed
+- Remove wrong offset for body
 
 ## 0.3.1 - 2018-10-02
 ### Added
