@@ -43,6 +43,18 @@ class WorkingGridBase
     }
 
 
+    public function getPagePaddingTop(): float { return $this->pagePaddings[0]; }
+
+
+    public function getPagePaddingRight(): float { return $this->pagePaddings[1]; }
+
+
+    public function getPagePaddingBottom(): float { return $this->pagePaddings[2]; }
+
+
+    public function getPagePaddingLeft(): float { return $this->pagePaddings[3]; }
+
+
     public function addCharacter(Character $character)
     {
         array_push($this->characters, $character);

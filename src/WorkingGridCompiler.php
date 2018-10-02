@@ -124,14 +124,14 @@ class WorkingGridCompiler
 
     private function getBodyMaxHeight(): float
     {
-        return 297 - $this->grid->getPagePaddings()[0] - $this->grid->getPagePaddings()[2]
+        return 297 - $this->grid->getPagePaddingTop() - $this->grid->getPagePaddingBottom()
             - $this->grid->headerHeight - $this->grid->footerHeight;
     }
 
 
     private function getBodyMaxWidth(): float
     {
-        return 210 - $this->grid->getPagePaddings()[1] - $this->grid->getPagePaddings()[3];
+        return 210 - $this->grid->getPagePaddingLeft() - $this->grid->getPagePaddingRight();
     }
 
 
@@ -181,7 +181,7 @@ class WorkingGridCompiler
 
     private function drawBody(PageInfo $infos)
     {
-        $offsetY = $this->grid->headerHeight + $this->grid->getPagePaddings()[0];
+        $offsetY = $this->grid->headerHeight + $this->grid->getPagePaddingTop();
 
         /** @var Character $character */
         foreach ($infos->getCharacters() as $index => $character) {
@@ -266,7 +266,7 @@ class WorkingGridCompiler
     private function drawHeader(PageInfo $infos)
     {
         if (is_a($this->grid, CustomizableHeader::class)) {
-            $this->pdf->SetXY(0, $this->grid->getPagePaddings()[0]);
+            $this->pdf->SetXY(0, $this->grid->getPagePaddingTop());
             $this->grid->header($this->pdf, $infos);
         }
     }
@@ -275,7 +275,7 @@ class WorkingGridCompiler
     private function drawFooter(PageInfo $infos)
     {
         if (is_a($this->grid, CustomizableFooter::class)) {
-            $this->pdf->SetXY(0, 297 - $this->grid->getPagePaddings()[2] - $this->grid->footerHeight);
+            $this->pdf->SetXY(0, 297 - $this->grid->getPagePaddingBottom() - $this->grid->footerHeight);
             $this->grid->footer($this->pdf, $infos);
         }
     }
