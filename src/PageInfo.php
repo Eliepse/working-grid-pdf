@@ -19,9 +19,9 @@ class PageInfo
 
     /**
      * PageInfo constructor.
-     * @param int $index
-     * @param int $total
-     * @param array $characters
+     * @param int $index The index of the page
+     * @param int $total The number of pages in the PDF
+     * @param array $characters The characters drew on the page
      */
     public function __construct(int $index, int $total, array $characters)
     {
@@ -32,21 +32,21 @@ class PageInfo
 
 
     /**
-     * The current page number
+     * The index of the page
      * @return int
      */
     public function getIndex(): int { return $this->index; }
 
 
     /**
-     * The number pages in the document
+     * The number of pages in the document
      * @return int
      */
     public function getTotal(): int { return $this->total; }
 
 
     /**
-     * The characters used in the current page
+     * The characters used in the page
      * @return array
      */
     public function getCharacters(): array { return $this->characters; }

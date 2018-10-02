@@ -17,10 +17,11 @@ class WorkingGrid extends WorkingGridBase
 
     /**
      * WorkingGrid constructor.
-     * @param string $title
-     * @param bool $withStrokeOrder
-     * @param int $columns
-     * @param int|null $linesPerPage
+     * @param string $title The title of the document
+     * @param bool $withStrokeOrder Determine if a helping line with the stroke order has to be drawn or not
+     * @param int $columns The number of columns (or cells) to draw per line
+     * @param int|null $linesPerPage The maximum number of lines per page. This can affect the size of the content to let
+     * it fit. When set to null, the number of page automatically calculated
      */
     public function __construct(string $title, bool $withStrokeOrder = false, int $columns = 9, int $linesPerPage = null)
     {

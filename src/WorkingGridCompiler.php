@@ -17,6 +17,10 @@ class WorkingGridCompiler
     private $pdf;
 
 
+    /**
+     * WorkingGridCompiler constructor.
+     * @param WorkingGridBase $grid The grid to be generated.
+     */
     public function __construct(WorkingGridBase $grid)
     {
         $this->grid = $grid;
@@ -24,7 +28,8 @@ class WorkingGridCompiler
 
 
     /**
-     * @return Mpdf
+     * Generate a new PDF, write all elements on it and return it.
+     * @return Mpdf The drew element
      * @throws \Mpdf\MpdfException
      */
     public function compile(): Mpdf
@@ -46,6 +51,7 @@ class WorkingGridCompiler
 
 
     /**
+     * Generate a new, empty and clean PDF and return it.
      * @return Mpdf
      * @throws \Mpdf\MpdfException
      */
@@ -69,6 +75,10 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Calculate and return the height of lines.
+     * @return float The height of a signle line
+     */
     private function getLineHeight(): float
     {
         // Row height calculated from columns per row
@@ -91,24 +101,40 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Calculate and return the size of a single cell (cells are squared).
+     * @return float The size of a single cell
+     */
     private function getCellSize(): float
     {
         return $this->getLineHeight() - $this->getStrokeOrderBoxHeight();
     }
 
 
+    /**
+     * Calcumate and return the width of the body.
+     * @return float The width of the body
+     */
     private function getBodyWidth(): float
     {
         return $this->hasLinesConstraint() ? $this->getCellSize() * $this->grid->columns : $this->getBodyMaxWidth();
     }
 
 
+    /**
+     * Calcumate and return the hight of the box where the strokes order is drawn
+     * @return float The height of the box. Return 0 if the feature is not activated.
+     */
     private function getStrokeOrderBoxHeight(): float
     {
         return $this->grid->withStrokeOrder ? $this->grid->strokeOrderSize * 1.5 : 0;
     }
 
 
+    /**
+     * Calculate and return the number of lines per page.
+     * @return int The number of lines per pages
+     */
     private function getLinesPerPage(): int
     {
         if ($this->hasLinesConstraint()) {
@@ -122,6 +148,10 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Calculate and return the max height of the body.
+     * @return float The max height of the body
+     */
     private function getBodyMaxHeight(): float
     {
         return 297 - $this->grid->getPagePaddingTop() - $this->grid->getPagePaddingBottom()
@@ -129,18 +159,32 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Calculate and return the max width of the body.
+     * @return float The max width of the body
+     */
     private function getBodyMaxWidth(): float
     {
         return 210 - $this->grid->getPagePaddingLeft() - $this->grid->getPagePaddingRight();
     }
 
 
+    /**
+     * Calculate and return the needed number of pages in the PDF.
+     * @return int The number of pages in the PDF
+     */
     private function getPageCount(): int
     {
         return ceil(count($this->grid->getCharacters()) / $this->getLinesPerPage());
     }
 
 
+    /**
+     * Compile a svg template and return it as a HTML string.
+     * @param string $filename The template filename
+     * @param array $_args The values to pass to the template
+     * @return string The compiled template
+     */
     private function getSVGTemplate(string $filename, $_args = []): string
     {
         try {
@@ -163,12 +207,20 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Check if the grid have a line per page constraint.
+     * @return bool Return true if there is a constraint, false otherwise.
+     */
     public function hasLinesConstraint(): bool
     {
         return $this->grid->linesPerPage !== null;
     }
 
 
+    /**
+     * Draw the given page to the PDF.
+     * @param PageInfo $infos The page to draw
+     */
     private function drawPage(PageInfo $infos)
     {
         $this->pdf->AddPage();
@@ -179,6 +231,10 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Draw the body of the given page to the PDF.
+     * @param PageInfo $infos The page to draw
+     */
     private function drawBody(PageInfo $infos)
     {
         $offsetY = $this->grid->headerHeight + $this->grid->getPagePaddingTop();
@@ -192,6 +248,11 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Draw a single line on the active page to the PDF.
+     * @param Character $character The character to draw on the line
+     * @param float $y The Y position to draw the line
+     */
     private function drawLine(Character $character, float $y)
     {
         $offsetX = $this->grid->getPagePaddingLeft();
@@ -223,6 +284,13 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Draw the writing steps box (strokes order) to the PDF.
+     * @param float $x The X position to draw the box
+     * @param float $y The Y position to draw the box
+     * @param Character $character The character to decompose
+     * @param string $fill The color of the strokes
+     */
     private function drawStrokeOrder(float $x, float $y, Character $character, string $fill = "#333333")
     {
         $size = $this->getStrokeOrderBoxHeight();
@@ -244,6 +312,13 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Draw a single cell to the PDF.
+     * @param float $x The X position to draw the cell
+     * @param float $y The Y position to draw the cell
+     * @param Character|null $character The character to draw in the cell. If null, only the background is printed.
+     * @param string $fill The color of the strokes
+     */
     private function drawCell(float $x, float $y, Character $character = null, string $fill = "#333333")
     {
         $size = $this->getCellSize();
@@ -261,7 +336,8 @@ class WorkingGridCompiler
 
 
     /**
-     * @param PageInfo $infos
+     * Draw the header of the given page.
+     * @param PageInfo $infos The page to draw
      */
     private function drawHeader(PageInfo $infos)
     {
@@ -272,6 +348,10 @@ class WorkingGridCompiler
     }
 
 
+    /**
+     * Draw the footer of the given page.
+     * @param PageInfo $infos The page to draw
+     */
     private function drawFooter(PageInfo $infos)
     {
         if (is_a($this->grid, CustomizableFooter::class)) {
