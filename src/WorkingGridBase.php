@@ -55,18 +55,27 @@ class WorkingGridBase
     }
 
 
+    /**
+     * @todo
+     */
     public function download()
     {
         // TODO
     }
 
 
+    /**
+     * @throws \Mpdf\MpdfException
+     */
     public function print()
     {
         (new WorkingGridCompiler($this))->compile()->Output($this->getPDFTitle() . '.pdf', 'I');
     }
 
 
+    /**
+     * @todo
+     */
     public function content(): string
     {
         // TODO

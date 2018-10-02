@@ -9,11 +9,11 @@
 namespace Eliepse\WorkingGrid;
 
 
-use TCPDF;
+use Mpdf\Mpdf;
 
 interface CustomizableHeader
 {
 
-    public function header(TCPDF $pdf, PageInfo $infos);
+    public function header(Mpdf $pdf, PageInfo $infos);
 
 }

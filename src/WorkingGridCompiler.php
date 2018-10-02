@@ -5,7 +5,7 @@ namespace Eliepse\WorkingGrid;
 
 
 use Error;
-use TCPDF;
+use Mpdf\Mpdf;
 
 class WorkingGridCompiler
 {
@@ -13,7 +13,7 @@ class WorkingGridCompiler
     /** @var WorkingGrid|CustomizableHeader|CustomizableFooter $grid */
     private $grid;
 
-    /** @var TCPDF $pdf */
+    /** @var Mpdf $pdf */
     private $pdf;
 
 
@@ -23,16 +23,17 @@ class WorkingGridCompiler
     }
 
 
-    public function compile(): TCPDF
+    /**
+     * @return Mpdf
+     * @throws \Mpdf\MpdfException
+     */
+    public function compile(): Mpdf
     {
         $this->pdf = $this->createPDF();
 
         $totalPage = $this->getPageCount();
 
-//        echo "<pre>" . var_dump($this->hasLinesConstraint()) . "</pre>"; exit(0);
-
         $chunks = array_chunk($this->grid->getCharacters(), $this->getLinesPerPage());
-
 
         for ($i = 0; $i < count($chunks); $i++) {
 
@@ -40,40 +41,27 @@ class WorkingGridCompiler
 
         }
 
-        $this->pdf->lastPage();
-
         return $this->pdf;
     }
 
 
-    private function createPDF(): TCPDF
+    /**
+     * @return Mpdf
+     * @throws \Mpdf\MpdfException
+     */
+    private function createPDF(): Mpdf
     {
-        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = new Mpdf();
 
-//        $fontname = \TCPDF_FONTS::addTTFfont(__DIR__ . "/../resources/assets/fonts/SourceHanSansSC-Regular.otf", "CID0CS", "", 32, __DIR__ . "/../resource/assets/fontsB/");
+        $pdf->title = $this->grid->title;
+        $pdf->cellPaddingT = 0;
+        $pdf->cellPaddingR = 0;
+        $pdf->cellPaddingB = 0;
+        $pdf->cellPaddingL = 0;
 
-//        $pdf->SetFont("sourceHan", '', null, __DIR__ . "/../resources/assets/fonts/SourceHanSansSC-Regular.otf", true);
-//        $pdf->AddFont($fontname, null, null, true);
-
-        $pdf->SetTitle($this->grid->title);
-//		$pdf->SetCreator('Eliepse');
-//		$pdf->SetAuthor('Eliepse');
-//		$pdf->SetSubject('TCPDF Tutorial');
-//		$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-        $pdf->SetFillColor(255, 255, 255);
-        $pdf->SetFontSize(43);
-        $pdf->setCellPaddings(0, 0, 0, 0);
-        $pdf->setCellMargins(0, 0, 0, 0);
-
-        $pdf->SetAutoPageBreak(false, PDF_MARGIN_BOTTOM);
-        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-        $pdf->setFontSubsetting(true);
-
-        $pdf->SetFontSize(16);
-
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
+        $pdf->autoPageBreak = false;
+        $pdf->autoPadding = false;
+        $pdf->autoMarginPadding = false;
 
         return $pdf;
     }
@@ -249,8 +237,7 @@ class WorkingGridCompiler
 
             $html = $this->getSVGTemplate('svg-stroke.php', ['strokes' => $strokes, 'fill' => $fill]);
 
-            $this->pdf->ImageSVG("@$html", $x + ((count($strokes) - .5) * ($size + .5)), $y + $offesetY, $characterSize, $characterSize);
-
+            $this->pdf->WriteFixedPosHTML($html, $x + ((count($strokes) - .5) * ($size + .5)), $y + $offesetY, $characterSize, $characterSize);
         }
     }
 
@@ -265,7 +252,7 @@ class WorkingGridCompiler
 
         $html = $this->getSVGTemplate($character ? 'svg-stroke.php' : 'svg-background.php', compact('strokes', 'fill'));
 
-        $this->pdf->ImageSVG("@$html", $x + ($offset / 2), $y + ($offset / 2), $size - $offset, $size - $offset);
+        $this->pdf->WriteFixedPosHTML($html, $x + ($offset / 2), $y + ($offset / 2), $size - $offset, $size - $offset);
 
         $this->pdf->Rect($x, $y, $size, $size);
     }
@@ -277,7 +264,7 @@ class WorkingGridCompiler
     private function drawHeader(PageInfo $infos)
     {
         if (is_a($this->grid, CustomizableHeader::class)) {
-            $this->pdf->SetAbsXY(0, $this->grid->getPagePaddings()[0]);
+            $this->pdf->SetXY(0, $this->grid->getPagePaddings()[0]);
             $this->grid->header($this->pdf, $infos);
         }
     }
@@ -286,7 +273,7 @@ class WorkingGridCompiler
     private function drawFooter(PageInfo $infos)
     {
         if (is_a($this->grid, CustomizableFooter::class)) {
-            $this->pdf->SetAbsXY(0, 297 - $this->grid->getPagePaddings()[2] - $this->grid->footerHeight);
+            $this->pdf->SetXY(0, 297 - $this->grid->getPagePaddings()[2] - $this->grid->footerHeight);
             $this->grid->footer($this->pdf, $infos);
         }
     }

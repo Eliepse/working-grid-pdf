@@ -4,7 +4,7 @@
 namespace Eliepse\WorkingGrid;
 
 
-use TCPDF;
+use Mpdf\Mpdf;
 
 class DefaultGrid extends WorkingGrid implements CustomizableHeader, CustomizableFooter
 {
@@ -15,14 +15,14 @@ class DefaultGrid extends WorkingGrid implements CustomizableHeader, Customizabl
     public $models = 3;
 
 
-    public function header(TCPDF $pdf, PageInfo $infos)
+    public function header(Mpdf $pdf, PageInfo $infos)
     {
         $pdf->SetFontSize(16);
         $pdf->Cell(210, 0, $this->title, false, false, 'C', 0, 0, 0, '', 'T', 'T');
     }
 
 
-    public function footer(TCPDF $pdf, PageInfo $infos)
+    public function footer(Mpdf $pdf, PageInfo $infos)
     {
         $pdf->SetFontSize(10);
         $pdf->Cell(210, $this->footerHeight, "{$infos->getIndex()} / {$infos->getTotal()}", false, false, 'C', 0, 0, 0, '', 'T', 'B');

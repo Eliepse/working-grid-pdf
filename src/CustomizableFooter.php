@@ -4,11 +4,11 @@
 namespace Eliepse\WorkingGrid;
 
 
-use TCPDF;
+use Mpdf\Mpdf;
 
 interface CustomizableFooter
 {
 
-    public function footer(TCPDF $pdf, PageInfo $infos);
+    public function footer(Mpdf $pdf, PageInfo $infos);
 
 }

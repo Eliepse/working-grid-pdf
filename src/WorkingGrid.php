@@ -4,8 +4,6 @@
 namespace Eliepse\WorkingGrid;
 
 
-use TCPDF;
-
 class WorkingGrid extends WorkingGridBase
 {
     public $headerHeight = 0;
@@ -22,7 +20,6 @@ class WorkingGrid extends WorkingGridBase
      * @param string $title
      * @param bool $withStrokeOrder
      * @param int $columns
-     * @param int $models
      * @param int|null $linesPerPage
      */
     public function __construct(string $title, bool $withStrokeOrder = false, int $columns = 9, int $linesPerPage = null)
