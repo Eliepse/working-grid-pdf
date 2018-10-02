@@ -63,6 +63,8 @@ class WorkingGridCompiler
         $pdf->autoPadding = false;
         $pdf->autoMarginPadding = false;
 
+        $pdf->SetFont("GB");
+
         return $pdf;
     }
 
