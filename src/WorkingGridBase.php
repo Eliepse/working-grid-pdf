@@ -4,26 +4,26 @@
 namespace Eliepse\WorkingGrid;
 
 
+use Mpdf\Output\Destination;
+
 class WorkingGridBase
 {
+    /** @var string $title */
     public $title;
 
-    protected $pagePaddings = [5, 20, 5, 20];
+    /** @var array $pagePaddings */
+    public $pagePaddings = [5, 20, 5, 20];
+
+    /** @var array $characters */
     protected $characters = [];
-
-
-    public function getCharacters(): array
-    {
-        return $this->characters;
-    }
 
 
     /**
      * Set the page paddings
-     * @param float $top
-     * @param float|null $right
-     * @param float|null $bottom
-     * @param float|null $left
+     * @param float $top The top padding of pages
+     * @param float|null $right The right padding of pages
+     * @param float|null $bottom The bottom padding of pages
+     * @param float|null $left The left padding of pages
      * @return WorkingGrid
      */
     public function setPagePaddings(float $top, float $right = null, float $bottom = null, float $left = null): self
@@ -37,59 +37,80 @@ class WorkingGridBase
     }
 
 
-    public function getPagePaddings(): array
-    {
-        return $this->pagePaddings;
-    }
-
-
-    public function getPagePaddingTop(): float { return $this->pagePaddings[0]; }
-
-
-    public function getPagePaddingRight(): float { return $this->pagePaddings[1]; }
-
-
-    public function getPagePaddingBottom(): float { return $this->pagePaddings[2]; }
-
-
-    public function getPagePaddingLeft(): float { return $this->pagePaddings[3]; }
-
-
-    public function addCharacter(Character $character)
+    /**
+     * Add a character to the list of characters to draw. Characters are drawn in the order added.
+     * @param Character $character The character to add to the list
+     */
+    public function addCharacter(Character $character): void
     {
         array_push($this->characters, $character);
     }
 
 
-    protected function getPDFTitle(): string
-    {
-        return $this->title;
-    }
-
-
     /**
-     * @todo
+     * Return the list of characters to draw.
+     * @return array The characters list
      */
-    public function download()
+    public function getCharacters(): array
     {
-        // TODO
+        return $this->characters;
     }
 
 
     /**
+     * Return the top padding of pages
+     * @return float The top padding of pages
+     */
+    public function getPagePaddingTop(): float { return $this->pagePaddings[0]; }
+
+
+    /**
+     * Return the right padding of pages
+     * @return float The right padding of pages
+     */
+    public function getPagePaddingRight(): float { return $this->pagePaddings[1]; }
+
+
+    /**
+     * Return the bottom padding of pages
+     * @return float The bottom padding of pages
+     */
+    public function getPagePaddingBottom(): float { return $this->pagePaddings[2]; }
+
+
+    /**
+     * Return the left padding of pages
+     * @return float The left padding of pages
+     */
+    public function getPagePaddingLeft(): float { return $this->pagePaddings[3]; }
+
+
+    /**
+     * Propose to download the PDF.
      * @throws \Mpdf\MpdfException
      */
-    public function print()
+    public function download(): void
     {
-        (new WorkingGridCompiler($this))->compile()->Output($this->getPDFTitle() . '.pdf', 'I');
+        (new WorkingGridCompiler($this))->compile()->Output($this->title . '.pdf', Destination::DOWNLOAD);
     }
 
 
     /**
-     * @todo
+     * Show the PDF in the browser if supported or propose to download it.
+     * @throws \Mpdf\MpdfException
+     */
+    public function print(): void
+    {
+        (new WorkingGridCompiler($this))->compile()->Output($this->title . '.pdf', Destination::INLINE);
+    }
+
+
+    /**
+     * Return the PDF file content as a string
+     * @throws \Mpdf\MpdfException
      */
     public function content(): string
     {
-        // TODO
+        (new WorkingGridCompiler($this))->compile()->Output($this->title . '.pdf', Destination::STRING_RETURN);
     }
 }
