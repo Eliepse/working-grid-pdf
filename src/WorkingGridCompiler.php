@@ -5,6 +5,8 @@ namespace Eliepse\WorkingGrid;
 
 
 use Error;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
 
 class WorkingGridCompiler
@@ -57,7 +59,18 @@ class WorkingGridCompiler
      */
     private function createPDF(): Mpdf
     {
-        $pdf = new Mpdf();
+        $pdf = new Mpdf([
+            'fontDir'      => [
+                __DIR__ . "/../resources/fonts/",
+            ],
+            'fontdata'     => [
+                'sourcehansans' => [
+                    'R' => 'SourceHanSansSC-Normal.ttf',
+                    'B' => 'SourceHanSansSC-Bold.ttf',
+                ],
+            ],
+            'default_font' => 'sourcehansans',
+        ]);
 
         $pdf->title = $this->grid->title;
         $pdf->cellPaddingT = 0;
@@ -68,8 +81,6 @@ class WorkingGridCompiler
         $pdf->autoPageBreak = false;
         $pdf->autoPadding = false;
         $pdf->autoMarginPadding = false;
-
-        $pdf->SetFont("GB");
 
         return $pdf;
     }

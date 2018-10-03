@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added phpdocs
 - Added `download` method
 - Added `content` method
+- Source Han Sans is now the default font 
 
 ### Changed
 - Renamed a method
