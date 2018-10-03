@@ -4,6 +4,9 @@
     "type" : "library",
     "license" : "MIT",
     "minimum-stability" : "stable",
+    "support" : {
+        "issues" : "https://github.com/Eliepse/working-grid-pdf/issues"
+    },
     "keywords" : [
         "pdf",
         "working grid",
