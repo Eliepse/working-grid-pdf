@@ -285,7 +285,7 @@ class WorkingGridCompiler
 
             } else if ($i <= $this->grid->models) {
 
-                $this->drawCell(($i * $this->getCellSize()) + $offsetX, $y + $offsetY, $character, "#cccccc");
+                $this->drawCell(($i * $this->getCellSize()) + $offsetX, $y + $offsetY, $character, "#b3b3b3");
 
             }
 
