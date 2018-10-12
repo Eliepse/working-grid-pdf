@@ -8,10 +8,10 @@ use Mpdf\Output\Destination;
 
 class WorkingGridBase
 {
-    /** @var string $title */
+    /** @var string $title The title of the document */
     public $title;
 
-    /** @var array $pagePaddings */
+    /** @var array $pagePaddings Set the padding of pages in millimeters. Formated as CSS : top, right, bottom, left */
     public $pagePaddings = [5, 20, 5, 20];
 
     /** @var array $characters */

@@ -82,8 +82,11 @@ as template constructor's parameters.
 | models          | integer       | The number of cells that keep a light gray character as a helping model.
 | linesPerPage    | integer, null | The number of lines per page. Inluence the size of cells in order to fit all lines.
 | pagePaddings    | array         | Set the padding of pages in millimeters. Formated as CSS : top, right, bottom, left.
+| headerHeight    | float         | Set the header height in millimeters.
 | footerHeight    | float         | Set the footer height in millimeters.
-| footerHeight    | float         | Set the footer height in millimeters.
+| strokeColor     | float         | Set the color of the first drawn character.
+| modelColor      | string        | Set the color the characters dranw as models.
+| guideColor      | string        | Set the color of guide strokes (background).
 
 #### Features
 

@@ -6,34 +6,34 @@ namespace Eliepse\WorkingGrid;
 
 class WorkingGrid extends WorkingGridBase
 {
-    /** @var int $headerHeight */
+    /** @var int $headerHeight Set the header height in millimeters */
     public $headerHeight = 0;
 
-    /** @var int $footerHeight */
+    /** @var int $footerHeight Set the footer height in millimeters */
     public $footerHeight = 0;
 
-    /** @var bool $withStrokeOrder */
+    /** @var bool $withStrokeOrder Determine if you want to show helps for writing character in the right order */
     public $withStrokeOrder;
 
-    /** @var int $columns */
+    /** @var int $columns The number of cells (columns) per line, influence the size of cells */
     public $columns;
 
-    /** @var int $models */
+    /** @var int $models The number of cells that keep a light gray character as a helping model */
     public $models;
 
-    /** @var int|null $linesPerPage */
+    /** @var int|null $linesPerPage The number of lines per page. Inluence the size of cells in order to fit all lines */
     public $linesPerPage;
 
-    /** @var float $strokeOrderSize */
+    /** @var float $strokeOrderSize The size, in millimeters, of characters for the helping stroke orders (if activated) */
     public $strokeOrderSize = 5.33;
 
-    /** @var string $strokeColor */
+    /** @var string $strokeColor Set the color of the first drawn character */
     public $strokeColor = "#333333";
 
-    /** @var string $modelColor */
+    /** @var string $modelColor Set the color the characters dranw as models */
     public $modelColor = "#b3b3b3";
 
-    /** @var string $guideColor */
+    /** @var string $guideColor Set the color of guide strokes (background) */
     public $guideColor = "#b3b3b3";
 
 
