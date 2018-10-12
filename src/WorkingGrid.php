@@ -27,6 +27,15 @@ class WorkingGrid extends WorkingGridBase
     /** @var float $strokeOrderSize */
     public $strokeOrderSize = 5.33;
 
+    /** @var string $strokeColor */
+    public $strokeColor = "#333333";
+
+    /** @var string $modelColor */
+    public $modelColor = "#b3b3b3";
+
+    /** @var string $guideColor */
+    public $guideColor = "#b3b3b3";
+
 
     /**
      * WorkingGrid constructor.

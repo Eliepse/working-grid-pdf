@@ -21,9 +21,9 @@ class WorkingGridCompiler
 
     /**
      * WorkingGridCompiler constructor.
-     * @param WorkingGridBase $grid The grid to be generated.
+     * @param WorkingGrid $grid The grid to be generated.
      */
-    public function __construct(WorkingGridBase $grid)
+    public function __construct(WorkingGrid $grid)
     {
         $this->grid = $grid;
     }
@@ -193,16 +193,14 @@ class WorkingGridCompiler
     /**
      * Compile a svg template and return it as a HTML string.
      * @param string $filename The template filename
-     * @param array $_args The values to pass to the template
+     * @param array|null $data Values to pass to the templates
      * @return string The compiled template
      */
-    private function getSVGTemplate(string $filename, $_args = []): string
+    private function getSVGTemplate(string $filename, array $data = null): string
     {
         try {
 
-            extract($_args);
-
-            ob_start();
+            ob_start() && extract($data ?? $this->getSVGTemplateData());
 
             /** @noinspection PhpIncludeInspection */
             require __DIR__ . "/../resources/templates/$filename";
@@ -277,18 +275,11 @@ class WorkingGridCompiler
 
         for ($i = 0; $i < $this->grid->columns; $i++) {
 
-            $this->drawCell(($i * $this->getCellSize()) + $offsetX, $y + $offsetY);
-
-            if ($i === 0) {
-
-                $this->drawCell(($i * $this->getCellSize()) + $offsetX, $y + $offsetY, $character);
-
-            } else if ($i <= $this->grid->models) {
-
-                $this->drawCell(($i * $this->getCellSize()) + $offsetX, $y + $offsetY, $character, "#b3b3b3");
-
-            }
-
+            $this->drawCell(
+                ($i * $this->getCellSize()) + $offsetX,
+                $y + $offsetY,
+                $i <= $this->grid->models ? $character : null,
+                $i !== 0);
 
         }
 
@@ -300,9 +291,8 @@ class WorkingGridCompiler
      * @param float $x The X position to draw the box
      * @param float $y The Y position to draw the box
      * @param Character $character The character to decompose
-     * @param string $fill The color of the strokes
      */
-    private function drawStrokeOrder(float $x, float $y, Character $character, string $fill = "#333333")
+    private function drawStrokeOrder(float $x, float $y, Character $character)
     {
         $size = $this->getStrokeOrderBoxHeight();
         $characterSize = $this->grid->strokeOrderSize;
@@ -316,7 +306,7 @@ class WorkingGridCompiler
 
             $strokes[] = $stroke;
 
-            $html = $this->getSVGTemplate('svg-stroke.php', ['strokes' => $strokes, 'fill' => $fill]);
+            $html = $this->getSVGTemplate('svg-stroke.php', $this->getSVGTemplateData(['strokes' => $strokes,]));
 
             $this->pdf->WriteFixedPosHTML($html, $x + ((count($strokes) - .5) * ($size + .5)), $y + $offesetY, $characterSize, $characterSize);
         }
@@ -328,19 +318,24 @@ class WorkingGridCompiler
      * @param float $x The X position to draw the cell
      * @param float $y The Y position to draw the cell
      * @param Character|null $character The character to draw in the cell. If null, only the background is printed.
-     * @param string $fill The color of the strokes
+     * @param bool $asModel If true, use the alternative color to draw the character
      */
-    private function drawCell(float $x, float $y, Character $character = null, string $fill = "#333333")
+    private function drawCell(float $x, float $y, Character $character = null, bool $asModel = false)
     {
         $size = $this->getCellSize();
 
         $offset = $character ? $size * .25 : 0;
 
         $strokes = $character ? $character->getStrokes() : null;
+        $data = $this->getSVGTemplateData(['strokes' => $strokes,]);
 
-        $html = $this->getSVGTemplate($character ? 'svg-stroke.php' : 'svg-background.php', compact('strokes', 'fill'));
+        $html = $this->getSVGTemplate('svg-background.php', $data);
+        $this->pdf->WriteFixedPosHTML($html, $x, $y, $size, $size);
 
-        $this->pdf->WriteFixedPosHTML($html, $x + ($offset / 2), $y + ($offset / 2), $size - $offset, $size - $offset);
+        if ($character) {
+            $html = $this->getSVGTemplate($asModel ? 'svg-stroke-model.php' : 'svg-stroke.php', $data);
+            $this->pdf->WriteFixedPosHTML($html, $x + ($offset / 2), $y + ($offset / 2), $size - $offset, $size - $offset);
+        }
 
         $this->pdf->Rect($x, $y, $size, $size);
     }
@@ -369,6 +364,17 @@ class WorkingGridCompiler
             $this->pdf->SetXY(0, 297 - $this->grid->getPagePaddingBottom() - $this->grid->footerHeight);
             $this->grid->footer($this->pdf, $infos);
         }
+    }
+
+
+    private function getSVGTemplateData(array $_data = []): array
+    {
+        return array_merge([
+            "strokes"             => [],
+            'strokeColor'         => $this->grid->strokeColor ?? "#333333",
+            'modelColor'          => $this->grid->modelColor ?? "#b3b3b3",
+            'cellBackgroundColor' => $this->grid->guideColor ?? "#b3b3b3",
+        ], $_data);
     }
 
 }

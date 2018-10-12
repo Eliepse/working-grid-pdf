@@ -2,7 +2,7 @@
 	<g transform="scale(1, -1) translate(0, -900)">
 
         <?php foreach ($strokes ?? [] as $stroke): ?>
-			<path d="<?= $stroke ?>" fill="<?= $strokeColor ?>"></path>
+			<path d="<?= $stroke ?>" fill="<?= $modelColor ?>"></path>
         <?php endforeach; ?>
 
 	</g>
