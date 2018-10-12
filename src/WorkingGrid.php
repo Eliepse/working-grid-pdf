@@ -6,12 +6,25 @@ namespace Eliepse\WorkingGrid;
 
 class WorkingGrid extends WorkingGridBase
 {
+    /** @var int $headerHeight */
     public $headerHeight = 0;
+
+    /** @var int $footerHeight */
     public $footerHeight = 0;
+
+    /** @var bool $withStrokeOrder */
     public $withStrokeOrder;
+
+    /** @var int $columns */
     public $columns;
+
+    /** @var int $models */
     public $models;
+
+    /** @var int|null $linesPerPage */
     public $linesPerPage;
+
+    /** @var float $strokeOrderSize */
     public $strokeOrderSize = 5.33;
 
 
