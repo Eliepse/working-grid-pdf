@@ -10,34 +10,59 @@ use Eliepse\WorkingGrid\WorkingGrid;
 
 class Template
 {
-    /** @var string $title The title of the document */
+    /**
+     * @var string $title The title of the document
+     */
     public $title;
 
-    /** @var int|null $row_max The number of lines per page. Inluence the size of cells in order to fit all lines */
+    /**
+     * @var int|null $row_max The number of lines per page. Inluence the size of cells in order to fit all lines
+     */
     public $row_max;
 
-    /** @var int $columns_amount */
+    /**
+     * @var int $columns_amount
+     */
     public $columns_amount = 9;
 
-    /** @var int $model_amount */
+    /**
+     * @var int $model_amount
+     */
     public $model_amount = 3;
 
-    /** @var float $tutorial_size The size, in millimeters, of characters for the helping stroke orders (if activated) */
+    /**
+     * @var float $tutorial_size The size, in millimeters, of characters for the helping stroke orders (if activated)
+     */
     public $tutorial_height = 6;
 
-    /** @var string $stroke_color Set the color of the first drawn character */
+    /**
+     * @var string $stroke_color Set the color of the first drawn character
+     */
     public $stroke_color = "#333333";
 
-    /** @var string $model_color Set the color the characters dranw as models */
+    /**
+     * @var string $model_color Set the color the characters dranw as models
+     */
     public $model_color = "#b3b3b3";
 
-    /** @var string $guide_color Set the color of guide strokes (background) */
+    /**
+     * @var string $guide_color Set the color of guide strokes (background)
+     */
     public $guide_color = "#b3b3b3";
 
+    /**
+     * @var float $header_height Set the header height in millimeters
+     */
     public $header_height;
 
+    /**
+     * @var float Set the footer height in millimeters
+     */
     public $footer_height;
 
+    /**
+     * @var array Set the padding of pages in millimeters. Formated as CSS : top, right, bottom, left
+     */
     public $paddings;
 
 
