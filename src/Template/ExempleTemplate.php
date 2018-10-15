@@ -15,10 +15,6 @@ class ExempleTemplate extends Template implements CustomizableHeader, Customizab
 
     public $footer_height = 12;
 
-    public $model_amount = 3;
-
-    public $columns_amount = 9;
-
 
     public function header(Mpdf $pdf, PageInfo $infos): void
     {

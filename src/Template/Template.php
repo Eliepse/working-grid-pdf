@@ -20,7 +20,7 @@ class Template
     public $columns_amount = 9;
 
     /** @var int $model_amount */
-    public $model_amount;
+    public $model_amount = 3;
 
     /** @var float $tutorial_size The size, in millimeters, of characters for the helping stroke orders (if activated) */
     public $tutorial_height = 6;
