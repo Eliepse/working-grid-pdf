@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - **Breaking change:** new generation process
 - New class structure implementing `Iterator` and `Countable` to easily handle page, row and cells generation
 - Implemented `Drawable` to `Character` class
+- Updated guide on readme
 
 ### Removed
 - **Breaking change:** Removed `DefaultGrid` class
