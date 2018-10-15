@@ -4,7 +4,7 @@
 namespace Eliepse\WorkingGrid;
 
 
-class Character
+class Character implements Drawable
 {
 
     /** @var string $character */
@@ -27,16 +27,6 @@ class Character
 
 
     /**
-     * Get the character as a string
-     * @return string
-     */
-    public function getCharacter(): string
-    {
-        return $this->character;
-    }
-
-
-    /**
      * Get the strokes of the character as a list of SVG that represent the drawing order
      * @return array
      */
@@ -45,4 +35,13 @@ class Character
         return $this->strokes;
     }
 
+
+    /**
+     * Return the string format of the content
+     * @return string
+     */
+    public function getText(): string
+    {
+        return $this->character;
+    }
 }
