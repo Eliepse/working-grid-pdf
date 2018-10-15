@@ -4,14 +4,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## 2.0.0-beta - 2018-10-15
 ### Added
-- **Breaking change:** Implemented words support
-- Implemented `PageConfig` and `GridConfig` config classes
-- Added `WithDrawingTutorial` interface to decide to show characters' strokes drawing exemple
-- Added `view()`, `base_path()`, `resources_path()`, `array_contains()` helpers
-- Added `ViewNotFoundException`
-- Added `Drawable` interface
-- Added `FillAttributes` trait to easily add attributes filling support to a class
+- **Breaking change:** implemented words support
+- `PageConfig` and `GridConfig` config classes
+- `WithDrawingTutorial` interface to decide to show characters' strokes drawing exemple
+- `view()`, `base_path()`, `resources_path()`, `array_contains()` helpers
+- `ViewNotFoundException`
+- `Drawable` interface
+- `FillAttributes` trait to easily add attributes filling support to a class
 - Added a file to simplify development server setup
 
 ### Changed
