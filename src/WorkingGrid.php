@@ -4,53 +4,189 @@
 namespace Eliepse\WorkingGrid;
 
 
-class WorkingGrid extends WorkingGridBase
+use Eliepse\WorkingGrid\Config\GridConfig;
+use Eliepse\WorkingGrid\Config\PageConfig;
+use Eliepse\WorkingGrid\Elements\Word;
+use Eliepse\WorkingGrid\Template\Template;
+
+class WorkingGrid implements \Iterator, \Countable
 {
-    /** @var int $headerHeight Set the header height in millimeters */
-    public $headerHeight = 0;
 
-    /** @var int $footerHeight Set the footer height in millimeters */
-    public $footerHeight = 0;
+    /**
+     * @var string $title The title of the document
+     */
+    public $title;
 
-    /** @var bool $withStrokeOrder Determine if you want to show helps for writing character in the right order */
-    public $withStrokeOrder;
+    /**
+     * @var array $words
+     */
+    private $words = [];
 
-    /** @var int $columns The number of cells (columns) per line, influence the size of cells */
-    public $columns;
+    /**
+     * @var int $page_iterator
+     */
+    private $page_iterator = 0;
 
-    /** @var int $models The number of cells that keep a light gray character as a helping model */
-    public $models;
+    /**
+     * @var GridConfig
+     */
+    private $grid_config;
 
-    /** @var int|null $linesPerPage The number of lines per page. Inluence the size of cells in order to fit all lines */
-    public $linesPerPage;
+    /**
+     * @var PageConfig
+     */
+    private $page_config;
 
-    /** @var float $strokeOrderSize The size, in millimeters, of characters for the helping stroke orders (if activated) */
-    public $strokeOrderSize = 5.33;
-
-    /** @var string $strokeColor Set the color of the first drawn character */
-    public $strokeColor = "#333333";
-
-    /** @var string $modelColor Set the color the characters dranw as models */
-    public $modelColor = "#b3b3b3";
-
-    /** @var string $guideColor Set the color of guide strokes (background) */
-    public $guideColor = "#b3b3b3";
+    /**
+     * @var Template
+     */
+    private $template;
 
 
     /**
      * WorkingGrid constructor.
-     * @param string $title The title of the document
-     * @param bool $withStrokeOrder Determine if a helping line with the stroke order has to be drawn or not
-     * @param int $columns The number of columns (or cells) to draw per line
-     * @param int|null $linesPerPage The maximum number of lines per page. This can affect the size of the content to let
-     * it fit. When set to null, the number of page automatically calculated
+     * @param string $title
+     * @param GridConfig $grid_config
+     * @param PageConfig $page_config
+     * @param Template $template
      */
-    public function __construct(string $title, bool $withStrokeOrder = false, int $columns = 9, int $linesPerPage = null)
+    public function __construct(string $title, GridConfig $grid_config, PageConfig $page_config, Template $template)
     {
         $this->title = $title;
-        $this->withStrokeOrder = $withStrokeOrder;
-        $this->columns = $columns;
-        $this->linesPerPage = $linesPerPage;
+        $this->grid_config = $grid_config;
+        $this->page_config = $page_config;
+        $this->template = $template;
     }
 
+
+    public static function inlinePrint(Template $template, array $words)
+    {
+        (new GridPainter($template->generate($words)))->inlinePrint();
+    }
+
+    public static function download(Template $template, array $words)
+    {
+        (new GridPainter($template->generate($words)))->download();
+    }
+
+
+    /**
+     * Add a character to the list of characters to draw. Characters are drawn in the order added.
+     * @param Word $word The content to add to the list
+     * @return WorkingGrid
+     */
+    public function addWord(Word $word): self
+    {
+        array_push($this->words, $word);
+
+        return $this;
+    }
+
+
+    /**
+     * @param array $words
+     * @return WorkingGrid
+     */
+    public function addWords(array $words): self
+    {
+        $this->words = array_merge($this->words, $words);
+
+        return $this;
+    }
+
+
+    /**
+     * Return the current element
+     * @link http://php.net/manual/en/iterator.current.php
+     * @return mixed Can return any type.
+     * @since 5.0.0
+     */
+    public function current(): GridPage
+    {
+        return new GridPage($this->key() + 1,
+            $this->getPageCharacters($this->key()),
+            $this->grid_config);
+    }
+
+
+    /**
+     * Move forward to next element
+     * @link http://php.net/manual/en/iterator.next.php
+     * @return void Any returned value is ignored.
+     * @since 5.0.0
+     */
+    public function next(): void
+    {
+        $this->page_iterator++;
+    }
+
+
+    /**
+     * Return the key of the current element
+     * @link http://php.net/manual/en/iterator.key.php
+     * @return mixed scalar on success, or null on failure.
+     * @since 5.0.0
+     */
+    public function key(): int
+    {
+        return $this->page_iterator;
+    }
+
+
+    /**
+     * Checks if current position is valid
+     * @link http://php.net/manual/en/iterator.valid.php
+     * @return boolean The return value will be casted to boolean and then evaluated.
+     * Returns true on success or false on failure.
+     * @since 5.0.0
+     */
+    public function valid(): bool
+    {
+        return $this->page_iterator < $this->count();
+    }
+
+
+    /**
+     * Rewind the Iterator to the first element
+     * @link http://php.net/manual/en/iterator.rewind.php
+     * @return void Any returned value is ignored.
+     * @since 5.0.0
+     */
+    public function rewind(): void
+    {
+        $this->page_iterator = 0;
+    }
+
+
+    /**
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count(): int
+    {
+        return $this->getPageCount();
+    }
+
+
+    public function getTemplate(): Template { return $this->template; }
+
+
+    public function getGridConfig(): GridConfig { return $this->grid_config; }
+
+
+    public function getPageConfig(): PageConfig { return $this->page_config; }
+
+
+    public function getPageCount(): int
+    {
+        return count(array_chunk($this->words, $this->grid_config->getWordsPerPage($this->page_config)));
+    }
+
+
+    private function getPageCharacters(int $page_number): array { return array_chunk($this->words, $this->grid_config->getWordsPerPage($this->page_config))[ $page_number ]; }
 }

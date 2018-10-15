@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: margu
- * Date: 01/10/2018
- * Time: 22:54
- */
 
-namespace Eliepse\WorkingGrid;
+namespace Eliepse\WorkingGrid\Template;
 
 
+use Eliepse\WorkingGrid\PageInfo;
 use Mpdf\Mpdf;
 
 interface CustomizableHeader

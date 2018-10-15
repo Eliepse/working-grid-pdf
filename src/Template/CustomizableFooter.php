@@ -1,9 +1,10 @@
 <?php
 
 
-namespace Eliepse\WorkingGrid;
+namespace Eliepse\WorkingGrid\Template;
 
 
+use Eliepse\WorkingGrid\PageInfo;
 use Mpdf\Mpdf;
 
 interface CustomizableFooter
