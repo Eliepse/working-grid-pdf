@@ -139,9 +139,9 @@ class GridPainter
     private function drawGroup(Group $group)
     {
         /** @var Cell $column */
-        foreach ($group as $column) {
+        foreach ($group as $index => $column) {
 
-            $this->drawBackground($column);
+            $this->drawBackground($column, $index);
 
             $this->drawStrokes($column, is_a($group, ModelCharacterGroup::class));
 
@@ -167,8 +167,19 @@ class GridPainter
     }
 
 
-    private function drawBackground(Cell $column): void
+    private function drawBackground(Cell $column, int $index = 0): void
     {
+        if ($index > 0) {
+
+            $x = $this->bodyToGlobalX($column->getX());
+            $y = $this->bodyToGlobalY($column->getY());
+
+            $this->pdf->SetDrawColor($this->grid_config->guide_color);
+            $this->pdf->SetLineWidth(.3);
+            $this->pdf->Line($x, $y, $x, $y + $this->utomm());
+
+        }
+
         $this->pdf->WriteFixedPosHTML(view("templates.svg-background", $this->getSVGData()),
             $this->bodyToGlobalX($column->getX()),
             $this->bodyToGlobalY($column->getY()),
@@ -179,6 +190,8 @@ class GridPainter
 
     private function drawCellBorders(Group $cell): void
     {
+        $this->pdf->SetDrawColor($this->grid_config->grid_color);
+
         $this->pdf->Rect($this->bodyToGlobalX($cell->getX()),
             $this->bodyToGlobalY($cell->getY()),
             $this->utomm($cell->getSize()),
@@ -213,6 +226,8 @@ class GridPainter
             $offsetX += (count($drawable->getStrokes()) + 1) * $txt_size;
 
         }
+
+        $this->pdf->SetDrawColor($this->grid_config->grid_color);
 
         $this->pdf->Rect($this->bodyToGlobalX(),
             $this->bodyToGlobalY($row->getY()) - $this->grid_config->getTutorialHeight(),
@@ -258,6 +273,7 @@ class GridPainter
             "cellBackgroundColor" => $this->grid_config->guide_color,
             "strokeColor"         => $this->grid_config->stroke_color,
             "modelColor"          => $this->grid_config->model_color,
+            "gridColor"           => $this->grid_config->grid_color,
         ], $data);
     }
 

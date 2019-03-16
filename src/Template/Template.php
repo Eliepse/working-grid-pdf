@@ -41,9 +41,14 @@ class Template
     public $stroke_color = "#333333";
 
     /**
-     * @var string $model_color Set the color the characters dranw as models
+     * @var string $model_color Set the color the characters drawn as models
      */
     public $model_color = "#b3b3b3";
+
+    /**
+     * @var string $grid_color Set the color of the grid
+     */
+    public $grid_color = "#333333";
 
     /**
      * @var string $guide_color Set the color of guide strokes (background)
@@ -83,7 +88,11 @@ class Template
             "tutorial_height" => $this->tutorial_height,
             "columns_amount"  => $this->columns_amount,
             "models_amount"   => $this->model_amount,
-            "row_max"         => $this->row_max,]);
+            "row_max"         => $this->row_max,
+            "stroke_color"    => $this->stroke_color,
+            "model_color"     => $this->model_color,
+            "guide_color"     => $this->guide_color,
+            "grid_color"      => $this->grid_color,]);
     }
 
 

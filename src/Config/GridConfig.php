@@ -25,11 +25,14 @@ class GridConfig
     /** @var string $stroke_color Set the color of the first drawn character */
     public $stroke_color = "#333333";
 
-    /** @var string $model_color Set the color the characters dranw as models */
+    /** @var string $model_color Set the color the characters drawn as models */
     public $model_color = "#b3b3b3";
 
     /** @var string $guide_color Set the color of guide strokes (background) */
     public $guide_color = "#b3b3b3";
+
+    /** @var string $grid_color Set the color of the grid */
+    public $grid_color = "#333333";
 
     public $tutorial_height = 6;
 
