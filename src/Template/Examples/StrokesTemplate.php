@@ -1,12 +1,16 @@
 <?php
 
 
-namespace Eliepse\WorkingGrid\Template;
+namespace Eliepse\WorkingGrid\Template\Examples;
 
 use Eliepse\WorkingGrid\PageInfo;
+use Eliepse\WorkingGrid\Template\CustomizableFooter;
+use Eliepse\WorkingGrid\Template\CustomizableHeader;
+use Eliepse\WorkingGrid\Template\Template;
+use Eliepse\WorkingGrid\Template\WithDrawingTutorial;
 use Mpdf\Mpdf;
 
-class ExempleTemplate extends Template implements CustomizableHeader, CustomizableFooter, WithDrawingTutorial
+class StrokesTemplate extends Template implements CustomizableHeader, CustomizableFooter, WithDrawingTutorial
 {
 
     public $title = "Exemple grid 中文";
