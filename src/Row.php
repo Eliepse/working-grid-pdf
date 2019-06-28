@@ -63,6 +63,16 @@ class Row implements \Iterator, \Countable
     }
 
 
+    public function getWord(): Word { return $this->word; }
+
+
+    /**
+     * Return the index of the row within the page
+     * @return int
+     */
+    public function getIndex(): int { return $this->y; }
+
+
     /**
      * Return the current element
      * @link http://php.net/manual/en/iterator.current.php
@@ -147,7 +157,4 @@ class Row implements \Iterator, \Countable
     {
         return floor($this->config->columns_amount / $this->word->getColumnSize());
     }
-
-
-    public function getWord(): Word { return $this->word; }
 }

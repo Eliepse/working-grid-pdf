@@ -121,15 +121,27 @@ class GridPainter
 
     private function drawRow(Row $row)
     {
+        // Draws the tutorial if requested
         if ($this->grid_config->draw_tutorial)
             $this->drawTutorial($row);
 
-        /** @var Group $group */
-        foreach ($row as $group) {
+        // Calculates the row index
+        $rowIndex = ($row->getIndex() + 1);
 
+        // Draws the row index on the left side of it
+        $this->pdf->WriteFixedPosHTML(
+            "<div style='text-align: right; font-size: 12px; font-family: sans-serif; color: #333;'>$rowIndex</div>",
+            $this->bodyToGlobalX($row->current()->getX()) - 6,
+            $this->bodyToGlobalY($row->getY()),
+            5,
+            5);
+
+        /**
+         * Draw each group of the row
+         * @var Group $group
+         */
+        foreach ($row as $group)
             $this->drawGroup($group);
-
-        }
     }
 
 
@@ -271,9 +283,9 @@ class GridPainter
     {
         return array_merge([
             "cellBackgroundColor" => $this->grid_config->guide_color,
-            "strokeColor"         => $this->grid_config->stroke_color,
-            "modelColor"          => $this->grid_config->model_color,
-            "gridColor"           => $this->grid_config->grid_color,
+            "strokeColor" => $this->grid_config->stroke_color,
+            "modelColor" => $this->grid_config->model_color,
+            "gridColor" => $this->grid_config->grid_color,
         ], $data);
     }
 
@@ -285,10 +297,10 @@ class GridPainter
     private function prepare(): Mpdf
     {
         $this->pdf = new Mpdf([
-            'fontDir'      => [
+            'fontDir' => [
                 resources_path("fonts/"),
             ],
-            'fontdata'     => [
+            'fontdata' => [
                 'sourcehansans' => [
                     'R' => 'SourceHanSansSC-Normal.ttf',
                     'B' => 'SourceHanSansSC-Bold.ttf',
