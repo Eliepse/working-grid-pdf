@@ -4,7 +4,7 @@
 namespace Eliepse\WorkingGrid {
 
     use Eliepse\WorkingGrid\Exception\ViewNotFoundException;
-    
+
     /**
      * @param string $viewPath
      * @param array $data
@@ -54,4 +54,14 @@ namespace Eliepse\WorkingGrid {
         }
     }
 
+    /**
+     * @param array $_
+     */
+    function dd(...$_)
+    {
+        echo "<pre>";
+        var_dump($_);
+        echo "</pre>";
+        exit(0);
+    }
 }

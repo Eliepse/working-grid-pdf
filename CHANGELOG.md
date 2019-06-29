@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 ### Added
 - Row number
+- New helper for debug
 
 ### Changed
 - Refactor grid preview (example) to handle more than one example
