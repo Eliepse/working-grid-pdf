@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Refactor grid preview (example) to handle more than one example
 
+### Fixed
+- Updated README documentation
+
 ## 2.0.2 - 2019-03-16
 ### Added
 - Grid colors can be modified from the template

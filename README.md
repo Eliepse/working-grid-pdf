@@ -16,18 +16,18 @@ $ composer require eliepse/working-grid-pdf
 ## Usage
 
 The most basic way of using this library would be like the following.
-You can see a more complete exemple [here](/public/index.php).
+You can see a more complete exemple in the [public](/public) directory.
 
 ```php
 use Eliepse\WorkingGrid\Character;
 use Eliepse\WorkingGrid\Elements\Word;
-use Eliepse\WorkingGrid\Template\ExempleTemplate;
+use Eliepse\WorkingGrid\Template\Examples\DefaultTemplate;
 use Eliepse\WorkingGrid\WorkingGrid;
 
 // Use the static method to generate pdf 
 // passing a template and an array of words
 WorkingGrid::inlinePrint(
-    new ExempleTemplate, 
+    new DefaultTemplate, 
     [
         new Word([new Character("中", [strokes data here])]),
         new Word([new Character("国", [...])]),
@@ -69,8 +69,8 @@ open source strokes data !
 
 ### Templates
 
-In order to provide flexibility and customization, this library use a system of templates. To make a custom workgin 
-grid, create a class that extends `Template`. A [template exemple](/src/Template/ExempleTemplate.php) is available. 
+In order to provide flexibility and customization, this library use a system of templates. To make a custom working 
+grid, create a class that extends `Template`, or use [predifiened examples](/src/Template/Examples). 
 
 ```php
 class MyTemplate extends Template
@@ -86,9 +86,15 @@ When creating a template, you can implements `CustomizableHeader` and `Customiza
 header and footer. The methods include a access to the instance of [mPDF](https://github.com/mpdf/mpdf) used to render
 the document, and an `PageInfo` object with information of the current drawn page.
 
-### Character drawing tutorial
+### Extras
 
-Too print an drawing order help, simply implement your template with the `WithDrawingTutorial` interface.
+#### Strokes order
+
+Too print a help that show the strokes order, simply implement the `WithDrawingTutorial` interface to your template.
+
+#### Pinyin
+
+If you want to show the pinyin of caracters, implement the `WithPinyin` interface to your template.
 
 ### Configuration
 
@@ -106,13 +112,14 @@ as template constructor's parameters.
 | footer_height   | float         | Set the footer height in millimeters.
 | stroke_color    | float         | Set the color of the first drawn character.
 | model_color     | string        | Set the color the characters dranw as models.
+| grid_color      | string        | Set the color of the grid.
 | guide_color     | string        | Set the color of guide strokes (background).
 
 #### Features
 
 | Property        | Type    | Description 
 |:--------------- |:--------|:------------
-| tutorial_height | float   | The size, in millimeters, of box that show a help for drawing strokes.
+| tutorial_height | float   | The size, in millimeters, of box that shows a help for drawing strokes.
 
 
 ## Built With
