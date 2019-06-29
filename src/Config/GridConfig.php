@@ -34,7 +34,11 @@ class GridConfig
     /** @var string $grid_color Set the color of the grid */
     public $grid_color = "#333333";
 
+    /** @var int $tutorial_height Set the size of the tutorial strokes */
     public $tutorial_height = 6;
+
+    /** @var bool $pinyin Determine if you want to show pinyin of caracters */
+    public $pinyin = false;
 
 
     public function __construct(array $attributes = [])
@@ -68,7 +72,7 @@ class GridConfig
 
     public function getTutorialHeight(): float
     {
-        return $this->draw_tutorial ? $this->tutorial_height : 0;
+        return $this->draw_tutorial || $this->pinyin ? $this->tutorial_height : 0;
     }
 
 }

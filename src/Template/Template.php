@@ -84,15 +84,16 @@ class Template
     private function extractGridConfig(): GridConfig
     {
         return new GridConfig([
-            "draw_tutorial"   => boolval(array_keys(class_implements($this), WithDrawingTutorial::class, true)),
+            "draw_tutorial" => boolval(array_keys(class_implements($this), WithDrawingTutorial::class, true)),
+            "pinyin" => boolval(array_keys(class_implements($this), WithPinyin::class, true)),
             "tutorial_height" => $this->tutorial_height,
-            "columns_amount"  => $this->columns_amount,
-            "models_amount"   => $this->model_amount,
-            "row_max"         => $this->row_max,
-            "stroke_color"    => $this->stroke_color,
-            "model_color"     => $this->model_color,
-            "guide_color"     => $this->guide_color,
-            "grid_color"      => $this->grid_color,]);
+            "columns_amount" => $this->columns_amount,
+            "models_amount" => $this->model_amount,
+            "row_max" => $this->row_max,
+            "stroke_color" => $this->stroke_color,
+            "model_color" => $this->model_color,
+            "guide_color" => $this->guide_color,
+            "grid_color" => $this->grid_color,]);
     }
 
 

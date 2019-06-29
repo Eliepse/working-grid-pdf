@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Row number
 - New helper for debug
+- Pinyin support
 
 ### Changed
 - Refactor grid preview (example) to handle more than one example

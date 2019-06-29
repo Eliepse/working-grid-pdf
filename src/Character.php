@@ -13,16 +13,21 @@ class Character implements Drawable
     /** @var array $strokes */
     private $strokes;
 
+    /** @var string $pinyin */
+    private $pinyin;
+
 
     /**
      * Character constructor.
      * @param string $character The character in his normal "textual" form
      * @param array $svgStrokes The strokes of the character, as a list of SVG that represent the drawing order
+     * @param string $pinyin
      */
-    public function __construct(string $character, array $svgStrokes)
+    public function __construct(string $character, array $svgStrokes, string $pinyin = '')
     {
         $this->character = $character;
         $this->strokes = $svgStrokes;
+        $this->pinyin = $pinyin;
     }
 
 
@@ -37,11 +42,21 @@ class Character implements Drawable
 
 
     /**
-     * Return the string format of the content
+     * Return the caracter as a multibyte string
      * @return string
      */
     public function getText(): string
     {
         return $this->character;
+    }
+
+
+    /**
+     * Return the pinyin of the caracter
+     * @return string
+     */
+    public function getPinyin(): string
+    {
+        return $this->pinyin;
     }
 }
