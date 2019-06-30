@@ -13,7 +13,7 @@ namespace Eliepse\WorkingGrid {
      */
     function view(string $viewPath, array $data = []): string
     {
-        preg_match("/\.([a-zA-Z0-9-_]+)$/", $viewPath, $matches);
+        preg_match("/\.?([a-zA-Z0-9-_]+)$/", $viewPath, $matches);
 
         $view_name = $matches[1];
 
