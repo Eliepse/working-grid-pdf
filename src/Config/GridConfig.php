@@ -72,7 +72,7 @@ class GridConfig
 
     public function getTutorialHeight(): float
     {
-        return $this->draw_tutorial || $this->pinyin ? $this->tutorial_height : 0;
+        return $this->draw_tutorial ? $this->tutorial_height : 0;
     }
 
 }

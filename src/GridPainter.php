@@ -119,12 +119,18 @@ class GridPainter
     }
 
 
+    /**
+     * @param Row $row
+     * @throws Exception\ViewNotFoundException
+     */
     private function drawRow(Row $row)
     {
         // Draws the tutorial if requested
         if ($this->grid_config->draw_tutorial)
             $this->drawTutorial($row);
-        else if ($this->grid_config->pinyin)
+
+        // Draws the pinyin if requested
+        if ($this->grid_config->pinyin)
             $this->drawPinyin($row);
 
         // Calculates the row index
@@ -132,10 +138,10 @@ class GridPainter
 
         // Draws the row index on the left side of it
         $this->pdf->WriteFixedPosHTML(
-            "<div style='text-align: right; font-size: 12px; font-family: sans-serif; color: #333;'>$rowIndex</div>",
-            $this->bodyToGlobalX($row->current()->getX()) - 6,
-            $this->bodyToGlobalY($row->getY()),
-            5,
+            view("row-index", compact('rowIndex')),
+            $this->bodyToGlobalX($row->current()->getX()) - 16,
+            $this->bodyToGlobalY($row->getY()) + 1,
+            15,
             5);
 
         /**
@@ -252,9 +258,6 @@ class GridPainter
 
     private function drawPinyin(Row $row)
     {
-        $offset = $this->grid_config->getTutorialHeight() * .2; // mm
-        $txt_size = $this->grid_config->getTutorialHeight() * .5; // mm
-
         $pinyins = array_reduce($row->getWord()->getCharacters(),
             function ($carry, Character $char) {
                 $carry[] = $char->getPinyin() ?: '∅';
@@ -262,18 +265,12 @@ class GridPainter
                 return $carry;
             }, []);
 
-        $this->pdf->WriteFixedPosHTML("<div style='font-size: {$txt_size}mm'>" . join(', ', $pinyins) . "</div>",
-            $this->bodyToGlobalX() + $offset,
-            $this->bodyToGlobalY($row->getY()) - $this->grid_config->getTutorialHeight(),
-            $this->page_config->getBodyWidth() - ($offset * 2),
-            $this->grid_config->getTutorialHeight());
-
-        $this->pdf->SetDrawColor($this->grid_config->grid_color);
-
-        $this->pdf->Rect($this->bodyToGlobalX(),
-            $this->bodyToGlobalY($row->getY()) - $this->grid_config->getTutorialHeight(),
-            $this->utomm($row->getColumnCount()),
-            $this->grid_config->getTutorialHeight());
+        $this->pdf->WriteFixedPosHTML(
+            view("row-pinyin", compact('pinyins')),
+            $this->bodyToGlobalX($row->current()->getX()) - 16,
+            $this->bodyToGlobalY($row->getY()) + 6,
+            15,
+            5);
     }
 
 
@@ -282,7 +279,10 @@ class GridPainter
      * @param int $unit
      * @return float
      */
-    private function utomm(int $unit = 1): float { return $this->unitsToMillimeters($unit); }
+    private function utomm(int $unit = 1): float
+    {
+        return $this->unitsToMillimeters($unit);
+    }
 
 
     private function bodyToGlobalX(int $unit = 0): float
