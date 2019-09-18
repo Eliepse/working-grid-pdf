@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 2.1.3 - 2019-09-18
+### Fixed
+- Corrected exemples interfaces implementation
+- Fixed deprecated function (php 7.3)
+
 ## 2.1.2 - 2019-06-30
 ### Fixed
 - Fixed the error when using a view that is not inside a subdirectory
