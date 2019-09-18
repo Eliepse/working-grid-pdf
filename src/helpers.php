@@ -17,7 +17,7 @@ namespace Eliepse\WorkingGrid {
 
         $view_name = $matches[1];
 
-        $filepath = mberegi_replace("\.", DIRECTORY_SEPARATOR, $viewPath);
+        $filepath = mb_eregi_replace("\.", DIRECTORY_SEPARATOR, $viewPath);
 
         if (file_exists($filepath))
             throw new ViewNotFoundException($view_name, $viewPath);
