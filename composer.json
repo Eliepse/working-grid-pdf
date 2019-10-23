@@ -20,7 +20,7 @@
     ],
     "require" : {
         "php" : ">=7.1",
-        "mpdf/mpdf" : "^7.1",
+        "mpdf/mpdf" : "^8.0",
         "ext-mbstring" : "*"
     },
     "autoload" : {
