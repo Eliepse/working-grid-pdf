@@ -139,10 +139,10 @@ class GridPainter
         // Draws the row index on the left side of it
         $this->pdf->WriteFixedPosHTML(
             view("row-index", compact('rowIndex')),
-            $this->bodyToGlobalX($row->current()->getX()) - 16,
-            $this->bodyToGlobalY($row->getY()) + 1,
-            15,
-            5);
+            $this->bodyToGlobalX($row->current()->getX()) - 10,
+            $this->bodyToGlobalY($row->getY()),
+            7,
+            3);
 
         /**
          * Draw each group of the row
@@ -267,8 +267,8 @@ class GridPainter
 
         $this->pdf->WriteFixedPosHTML(
             view("row-pinyin", compact('pinyins')),
-            $this->bodyToGlobalX($row->current()->getX()) - 16,
-            $this->bodyToGlobalY($row->getY()) + 6,
+            $this->bodyToGlobalX($row->current()->getX()) - 18,
+            $this->bodyToGlobalY($row->getY()) + 5,
             15,
             5);
     }
