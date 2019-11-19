@@ -3,7 +3,7 @@
     "description" : "Library to easily create working grids and export them as PDF",
     "type" : "library",
     "license" : "MIT",
-    "version" : "2.1.4",
+    "version" : "2.1.5",
     "minimum-stability" : "stable",
     "support" : {
         "issues" : "https://github.com/Eliepse/working-grid-pdf/issues"
