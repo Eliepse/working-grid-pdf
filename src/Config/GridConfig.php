@@ -37,68 +37,66 @@ class GridConfig
 	/** @var bool $pinyin Determine if you want to show pinyin of caracters */
 	public $pinyin = false;
 
+	/**
+	 * @var PageConfig $page_config
+	 */
+	public $page_config;
 
-	public function __construct(array $attributes = [])
+
+	public function __construct(PageConfig $pageConfig, array $attributes = [])
 	{
 		$this->fill($attributes);
+		$this->page_config = $pageConfig;
 	}
 
 
 	/**
 	 * Compute and return the max number of row in a page according to the given configuration
 	 *
-	 * @param PageConfig $page_config
-	 *
 	 * @return mixed
 	 */
-	public function getWordsPerPage(PageConfig $page_config)
+	public function getWordsPerPage()
 	{
 		// If line not defined, find an adapted number of row per page
-		return max(floor($page_config->getBodyHeight() / $this->getRowHeight($page_config)), 1);
+		return max(floor($this->page_config->getBodyHeight() / $this->getRowHeight()), 1);
 	}
 
 
 	/**
 	 * Compute and return the height of just the character part
 	 *
-	 * @param PageConfig $page_config
-	 *
 	 * @return float
 	 */
-	public function getUnitSize(PageConfig $page_config): float
+	public function getUnitSize(): float
 	{
-		return $page_config->getBodyWidth() / $this->columns_amount;
+		return $this->page_config->getBodyWidth() / $this->columns_amount;
 	}
 
 
 	/**
 	 * Compute and return the total height of a row
 	 *
-	 * @param PageConfig $page_config
-	 *
 	 * @return float
 	 */
-	public function getRowHeight(PageConfig $page_config): float
+	public function getRowHeight(): float
 	{
-		return $this->getUnitSize($page_config) + $this->getTutorialHeight($page_config);
+		return $this->getUnitSize() + $this->getTutorialHeight();
 	}
 
 
 	/**
 	 * Compute and return the height ot just the tutorial part
 	 *
-	 * @param PageConfig $page_config
-	 *
 	 * @return float
 	 */
-	public function getTutorialHeight(PageConfig $page_config): float
+	public function getTutorialHeight(): float
 	{
 		if (! $this->draw_tutorial) {
 			return 0;
 		}
 
 		if (empty($this->tutorial_height)) {
-			return $this->getUnitSize($page_config) * .625;
+			return $this->getUnitSize() * .625;
 		}
 
 		return $this->tutorial_height;

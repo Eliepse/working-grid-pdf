@@ -33,11 +33,6 @@ class WorkingGrid implements \Iterator, \Countable
 	private $grid_config;
 
 	/**
-	 * @var PageConfig
-	 */
-	private $page_config;
-
-	/**
 	 * @var Template
 	 */
 	private $template;
@@ -51,11 +46,10 @@ class WorkingGrid implements \Iterator, \Countable
 	 * @param PageConfig $page_config
 	 * @param Template $template
 	 */
-	public function __construct(string $title, GridConfig $grid_config, PageConfig $page_config, Template $template)
+	public function __construct(string $title, GridConfig $grid_config, Template $template)
 	{
 		$this->title = $title;
 		$this->grid_config = $grid_config;
-		$this->page_config = $page_config;
 		$this->template = $template;
 	}
 
@@ -190,14 +184,14 @@ class WorkingGrid implements \Iterator, \Countable
 	public function getGridConfig(): GridConfig { return $this->grid_config; }
 
 
-	public function getPageConfig(): PageConfig { return $this->page_config; }
+	public function getPageConfig(): PageConfig { return $this->grid_config->page_config; }
 
 
 	public function getPageCount(): int
 	{
-		return count(array_chunk($this->words, $this->grid_config->getWordsPerPage($this->page_config)));
+		return count(array_chunk($this->words, $this->grid_config->getWordsPerPage()));
 	}
 
 
-	private function getPageCharacters(int $page_number): array { return array_chunk($this->words, $this->grid_config->getWordsPerPage($this->page_config))[ $page_number ]; }
+	private function getPageCharacters(int $page_number): array { return array_chunk($this->words, $this->grid_config->getWordsPerPage())[ $page_number ]; }
 }

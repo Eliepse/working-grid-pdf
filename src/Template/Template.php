@@ -68,8 +68,7 @@ class Template
 
 	public function generate(array $words = []): WorkingGrid
 	{
-		return (new WorkingGrid($this->title, $this->extractGridConfig(), $this->extractPageConfig(), $this))
-			->addWords($words);
+		return (new WorkingGrid($this->title, $this->extractGridConfig(), $this))->addWords($words);
 	}
 
 
@@ -78,16 +77,19 @@ class Template
 	 */
 	private function extractGridConfig(): GridConfig
 	{
-		return new GridConfig([
-			"draw_tutorial" => boolval(array_keys(class_implements($this), WithDrawingTutorial::class, true)),
-			"pinyin" => boolval(array_keys(class_implements($this), WithPinyin::class, true)),
-			"tutorial_height" => $this->tutorial_height,
-			"columns_amount" => $this->columns_amount,
-			"models_amount" => $this->model_amount,
-			"stroke_color" => $this->stroke_color,
-			"model_color" => $this->model_color,
-			"guide_color" => $this->guide_color,
-			"grid_color" => $this->grid_color,]);
+		return new GridConfig(
+			$this->extractPageConfig(),
+			[
+				"draw_tutorial" => boolval(array_keys(class_implements($this), WithDrawingTutorial::class, true)),
+				"pinyin" => boolval(array_keys(class_implements($this), WithPinyin::class, true)),
+				"tutorial_height" => $this->tutorial_height,
+				"columns_amount" => $this->columns_amount,
+				"models_amount" => $this->model_amount,
+				"stroke_color" => $this->stroke_color,
+				"model_color" => $this->model_color,
+				"guide_color" => $this->guide_color,
+				"grid_color" => $this->grid_color,]
+		);
 	}
 
 
@@ -98,15 +100,14 @@ class Template
 	{
 		$config = new PageConfig([
 			"header_height" => $this->header_height,
-			"footer_height" => $this->footer_height,]);
+			"footer_height" => $this->footer_height,
+		]);
 
 		if (is_array($this->paddings) && count($this->paddings) > 0) {
-
 			$config->setPaddings($this->paddings[0] ?? null,
 				$this->paddings[1] ?? null,
 				$this->paddings[2] ?? null,
 				$this->paddings[3] ?? null);
-
 		}
 
 		return $config;
