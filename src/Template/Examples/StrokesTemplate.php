@@ -9,5 +9,5 @@ use Eliepse\WorkingGrid\Template\WithDrawingTutorial;
 
 class StrokesTemplate extends DefaultTemplate implements WithDrawingTutorial
 {
-    public $title = "Strokes Exemple grid 中文";
+	public $title = "Strokes Exemple grid 中文";
 }
