@@ -44,6 +44,13 @@ class GridConfig
 	}
 
 
+	/**
+	 * Compute and return the max number of row in a page according to the given configuration
+	 *
+	 * @param PageConfig $page_config
+	 *
+	 * @return mixed
+	 */
 	public function getWordsPerPage(PageConfig $page_config)
 	{
 		// If line not defined, find an adapted number of row per page
@@ -51,18 +58,39 @@ class GridConfig
 	}
 
 
+	/**
+	 * Compute and return the height of just the character part
+	 *
+	 * @param PageConfig $page_config
+	 *
+	 * @return float
+	 */
 	public function getUnitSize(PageConfig $page_config): float
 	{
 		return $page_config->getBodyWidth() / $this->columns_amount;
 	}
 
 
+	/**
+	 * Compute and return the total height of a row
+	 *
+	 * @param PageConfig $page_config
+	 *
+	 * @return float
+	 */
 	public function getRowHeight(PageConfig $page_config): float
 	{
 		return $this->getUnitSize($page_config) + $this->getTutorialHeight($page_config);
 	}
 
 
+	/**
+	 * Compute and return the height ot just the tutorial part
+	 *
+	 * @param PageConfig $page_config
+	 *
+	 * @return float
+	 */
 	public function getTutorialHeight(PageConfig $page_config): float
 	{
 		if (! $this->draw_tutorial) {
