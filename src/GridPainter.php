@@ -292,7 +292,10 @@ class GridPainter
 
 	private function bodyToGlobalY(int $unit = 0): float
 	{
-		return $this->page_config->padding_top + $this->page_config->header_height + (($this->ratio + $this->grid_config->getTutorialHeight()) * $unit);
+		return $this->page_config->padding_top
+			+ $this->page_config->header_height
+			+ $this->grid_config->getTutorialHeight() // Offset to prevent tutorial overlaping with the heard
+			+ ($this->grid_config->getRowHeight() * $unit); // Move the cursor by the amount of drawn rows
 	}
 
 
