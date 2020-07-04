@@ -6,11 +6,8 @@ namespace Eliepse\WorkingGrid;
 
 use Eliepse\WorkingGrid\Config\GridConfig;
 use Eliepse\WorkingGrid\Config\PageConfig;
-use Eliepse\WorkingGrid\Elements\CharacterGroup;
-use Eliepse\WorkingGrid\Elements\EmptyGroup;
 use Eliepse\WorkingGrid\Elements\Group;
 use Eliepse\WorkingGrid\Elements\ModelCharacterGroup;
-use Eliepse\WorkingGrid\Elements\Word;
 use Eliepse\WorkingGrid\Template\CustomizableFooter;
 use Eliepse\WorkingGrid\Template\CustomizableHeader;
 use Eliepse\WorkingGrid\Template\Template;
@@ -147,8 +144,6 @@ class GridPainter
 
 		/**
 		 * Draw each group of the row
-		 *
-		 * @var Group $group
 		 */
 		foreach ($row as $group)
 			$this->drawGroup($group);
@@ -223,8 +218,8 @@ class GridPainter
 
 	private function drawTutorial(Row $row)
 	{
-		$offset = $this->grid_config->getTutorialHeight() * .1;
-		$txt_size = $this->grid_config->getTutorialHeight() * .8;
+		$offset = $this->grid_config->getTutorialHeight($this->page_config) * .1;
+		$txt_size = $this->grid_config->getTutorialHeight($this->page_config) * .8;
 
 		$offsetX = 0;
 
@@ -239,7 +234,7 @@ class GridPainter
 
 				$this->pdf->WriteFixedPosHTML(view("templates.svg-stroke", $this->getSVGData(["strokes" => $strokes])),
 					$this->bodyToGlobalX() + ($index * $txt_size) + $offset + $offsetX,
-					$this->bodyToGlobalY($row->getY()) + $offset - $this->grid_config->getTutorialHeight(),
+					$this->bodyToGlobalY($row->getY()) + $offset - $this->grid_config->getTutorialHeight($this->page_config),
 					$txt_size,
 					$txt_size);
 
@@ -252,9 +247,9 @@ class GridPainter
 		$this->pdf->SetDrawColor($this->grid_config->grid_color);
 
 		$this->pdf->Rect($this->bodyToGlobalX(),
-			$this->bodyToGlobalY($row->getY()) - $this->grid_config->getTutorialHeight(),
+			$this->bodyToGlobalY($row->getY()) - $this->grid_config->getTutorialHeight($this->page_config),
 			$this->utomm($row->getColumnCount()),
-			$this->grid_config->getTutorialHeight());
+			$this->grid_config->getTutorialHeight($this->page_config));
 	}
 
 
@@ -297,7 +292,7 @@ class GridPainter
 
 	private function bodyToGlobalY(int $unit = 0): float
 	{
-		return $this->page_config->padding_top + $this->page_config->header_height + (($this->ratio + $this->grid_config->getTutorialHeight()) * $unit);
+		return $this->page_config->padding_top + $this->page_config->header_height + (($this->ratio + $this->grid_config->getTutorialHeight($this->page_config)) * $unit);
 	}
 
 

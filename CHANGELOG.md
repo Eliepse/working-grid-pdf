@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Updated dependencies (mpdf now supports php-7.4)
 - Switch indents from spaces to tabs in order to increase accessibility
+- Tutorial height can be relative to cell size when set to 0
 
 ### Removed
 - Removed "row_max" and "lines_max" that wasn't working and has no pratical usage

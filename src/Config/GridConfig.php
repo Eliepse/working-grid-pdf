@@ -59,13 +59,21 @@ class GridConfig
 
 	public function getRowHeight(PageConfig $page_config): float
 	{
-		return $this->getUnitSize($page_config) + $this->getTutorialHeight();
+		return $this->getUnitSize($page_config) + $this->getTutorialHeight($page_config);
 	}
 
 
-	public function getTutorialHeight(): float
+	public function getTutorialHeight(PageConfig $page_config): float
 	{
-		return $this->draw_tutorial ? $this->tutorial_height : 0;
+		if (! $this->draw_tutorial) {
+			return 0;
+		}
+
+		if (empty($this->tutorial_height)) {
+			return $this->getUnitSize($page_config) * .625;
+		}
+
+		return $this->tutorial_height;
 	}
 
 }

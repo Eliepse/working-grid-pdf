@@ -118,7 +118,7 @@ as template constructor's parameters.
 
 | Property        | Type    | Description 
 |:--------------- |:--------|:------------
-| tutorial_height | float   | The size, in millimeters, of box that shows a help for drawing strokes.
+| tutorial_height | float   | The size, in millimeters, of box that shows a help for drawing strokes. Relative to the cell size when set to 0.
 
 
 ## Built With

@@ -9,7 +9,7 @@ use Eliepse\WorkingGrid\WorkingGrid;
 
 function getStrokes(string $filename): array { return json_decode(file_get_contents(__DIR__ . "/../resources/samples/strokes/$filename.json"), true); }
 
-WorkingGrid::inlinePrint(new StrokesTemplate, [
+WorkingGrid::inlinePrint(new StrokesTemplate(), [
 	new Word([new Character("中", getStrokes("zhong"))]),
 	new Word([new Character("国", getStrokes("guo"))]),
 	new Word([
