@@ -4,6 +4,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+- Updated dependencies (mpdf now supports php-7.4)
+- Switch indents from spaces to tabs in order to increase accessibility
 
 ## 2.1.7 - 2019-12-11
 ### Fixed
