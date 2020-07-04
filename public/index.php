@@ -8,6 +8,7 @@
 <ul>
 	<li><a href="/default.php">Simple grid</a></li>
 	<li><a href="/strokes.php">Grid with strokes</a></li>
+	<li><a href="/strokes-relative.php">Grid with strokes (relative size)</a></li>
 	<li><a href="/pinyin.php">Grid with pinyin</a></li>
 </ul>
 </body>
