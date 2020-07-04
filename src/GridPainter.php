@@ -79,7 +79,7 @@ class GridPainter
 	 */
 	public function paint(): Mpdf
 	{
-		$this->ratio = $this->grid_config->getUnitSize($this->page_config);
+		$this->ratio = $this->grid_config->getUnitSize();
 		$this->prepare();
 
 		foreach ($this->workingGrid as $index => $page) {
@@ -218,8 +218,8 @@ class GridPainter
 
 	private function drawTutorial(Row $row)
 	{
-		$offset = $this->grid_config->getTutorialHeight($this->page_config) * .1;
-		$txt_size = $this->grid_config->getTutorialHeight($this->page_config) * .8;
+		$offset = $this->grid_config->getTutorialHeight() * .1;
+		$txt_size = $this->grid_config->getTutorialHeight() * .8;
 
 		$offsetX = 0;
 
@@ -234,7 +234,7 @@ class GridPainter
 
 				$this->pdf->WriteFixedPosHTML(view("templates.svg-stroke", $this->getSVGData(["strokes" => $strokes])),
 					$this->bodyToGlobalX() + ($index * $txt_size) + $offset + $offsetX,
-					$this->bodyToGlobalY($row->getY()) + $offset - $this->grid_config->getTutorialHeight($this->page_config),
+					$this->bodyToGlobalY($row->getY()) + $offset - $this->grid_config->getTutorialHeight(),
 					$txt_size,
 					$txt_size);
 
@@ -247,9 +247,9 @@ class GridPainter
 		$this->pdf->SetDrawColor($this->grid_config->grid_color);
 
 		$this->pdf->Rect($this->bodyToGlobalX(),
-			$this->bodyToGlobalY($row->getY()) - $this->grid_config->getTutorialHeight($this->page_config),
+			$this->bodyToGlobalY($row->getY()) - $this->grid_config->getTutorialHeight(),
 			$this->utomm($row->getColumnCount()),
-			$this->grid_config->getTutorialHeight($this->page_config));
+			$this->grid_config->getTutorialHeight());
 	}
 
 
@@ -292,7 +292,7 @@ class GridPainter
 
 	private function bodyToGlobalY(int $unit = 0): float
 	{
-		return $this->page_config->padding_top + $this->page_config->header_height + (($this->ratio + $this->grid_config->getTutorialHeight($this->page_config)) * $unit);
+		return $this->page_config->padding_top + $this->page_config->header_height + (($this->ratio + $this->grid_config->getTutorialHeight()) * $unit);
 	}
 
 
