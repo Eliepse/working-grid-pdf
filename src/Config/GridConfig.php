@@ -16,9 +16,6 @@ class GridConfig
 	/** @var int $columns_amount The number of columns per line (influence the size of the grid) */
 	public $columns_amount;
 
-	/** @var int|null $lines_max The number of lines per page. Inluence the size of cells in order to fit all lines */
-	public $lines_max;
-
 	/** @var int $models_amount The number of cells that keep a light gray character as a helping model */
 	public $models_amount;
 
@@ -56,11 +53,7 @@ class GridConfig
 
 	public function getUnitSize(PageConfig $page_config): float
 	{
-		$ratioPerWidth = $page_config->getBodyWidth() / $this->columns_amount;
-
-		$ratioPerMaxLine = ($page_config->getBodyHeight() / ($this->lines_max ?? 1)) - $this->getTutorialHeight();
-
-		return min($ratioPerWidth, $ratioPerMaxLine);
+		return $page_config->getBodyWidth() / $this->columns_amount;
 	}
 
 

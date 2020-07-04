@@ -16,11 +16,6 @@ class Template
 	public $title;
 
 	/**
-	 * @var int|null $row_max The number of lines per page. Inluence the size of cells in order to fit all lines
-	 */
-	public $row_max;
-
-	/**
 	 * @var int $columns_amount
 	 */
 	public $columns_amount = 9;
@@ -89,7 +84,6 @@ class Template
 			"tutorial_height" => $this->tutorial_height,
 			"columns_amount" => $this->columns_amount,
 			"models_amount" => $this->model_amount,
-			"row_max" => $this->row_max,
 			"stroke_color" => $this->stroke_color,
 			"model_color" => $this->model_color,
 			"guide_color" => $this->guide_color,

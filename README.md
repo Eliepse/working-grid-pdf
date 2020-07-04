@@ -106,7 +106,6 @@ as template constructor's parameters.
 | title           | string        | The title of the document.
 | columns_amount  | integer       | The number of cells (columns) per line, influence the size of cells.
 | model_amount    | integer       | The number of cells that keep a light gray character as a helping model.
-| row_max         | integer, null | The number of lines per page. Inluence the size of cells in order to fit all lines.
 | paddings        | array         | Set the padding of pages in millimeters. Formated as CSS : top, right, bottom, left.
 | header_height   | float         | Set the header height in millimeters.
 | footer_height   | float         | Set the footer height in millimeters.

@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Updated dependencies (mpdf now supports php-7.4)
 - Switch indents from spaces to tabs in order to increase accessibility
 
+### Removed
+- Removed "row_max" and "lines_max" that wasn't working and has no pratical usage
+
 ## 2.1.7 - 2019-12-11
 ### Fixed
 - Problem with tag and version number
