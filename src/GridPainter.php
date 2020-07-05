@@ -232,11 +232,16 @@ class GridPainter
 
 				$strokes[] = $stroke;
 
-				$this->pdf->WriteFixedPosHTML(view("templates.svg-stroke", $this->getSVGData(["strokes" => $strokes])),
+				$this->pdf->WriteFixedPosHTML(
+					view(
+						"templates.svg-stroke",
+						$this->getSVGData(["strokes" => $strokes, "strokeColor" => $this->grid_config->tutorial_color])
+					),
 					$this->bodyToGlobalX() + ($index * $txt_size) + $offset + $offsetX,
 					$this->bodyToGlobalY($row->getY()) + $offset - $this->grid_config->getTutorialHeight(),
 					$txt_size,
-					$txt_size);
+					$txt_size
+				);
 
 			}
 
@@ -316,6 +321,7 @@ class GridPainter
 	{
 		return array_merge([
 			"cellBackgroundColor" => $this->grid_config->guide_color,
+			"tutorialColor" => $this->grid_config->tutorial_color,
 			"strokeColor" => $this->grid_config->stroke_color,
 			"modelColor" => $this->grid_config->model_color,
 			"gridColor" => $this->grid_config->grid_color,

@@ -19,6 +19,9 @@ class GridConfig
 	/** @var int $models_amount The number of cells that keep a light gray character as a helping model */
 	public $models_amount;
 
+	/** @var string $tutorial_color Set the color of the tutorial strokes */
+	public $tutorial_color = "#333333";
+
 	/** @var string $stroke_color Set the color of the first drawn character */
 	public $stroke_color = "#333333";
 

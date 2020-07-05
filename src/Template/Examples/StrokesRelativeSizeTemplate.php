@@ -11,4 +11,5 @@ class StrokesRelativeSizeTemplate extends DefaultTemplate implements WithDrawing
 {
 	public $title = "Strokes Exemple grid 中文";
 	public $tutorial_height = 0;
+	public $tutorial_color = "#8888cc";
 }

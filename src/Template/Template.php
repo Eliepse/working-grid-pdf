@@ -31,6 +31,11 @@ class Template
 	public $tutorial_height = 6;
 
 	/**
+	 * @var string $tutorial_color Set the color of the tutorial strokes
+	 */
+	public $tutorial_color = "#333333";
+
+	/**
 	 * @var string $stroke_color Set the color of the first drawn character
 	 */
 	public $stroke_color = "#333333";
@@ -85,6 +90,7 @@ class Template
 				"tutorial_height" => $this->tutorial_height,
 				"columns_amount" => $this->columns_amount,
 				"models_amount" => $this->model_amount,
+				"tutorial_color" => $this->tutorial_color,
 				"stroke_color" => $this->stroke_color,
 				"model_color" => $this->model_color,
 				"guide_color" => $this->guide_color,
