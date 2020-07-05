@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - New option to change tutorial color
 
+### Changed
+- Refactor strokes dawing for less code complexity
+
 ## 2.2.1 - 2020-07-05
 ### Added
 - New preview page for tutorail's relative size

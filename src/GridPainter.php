@@ -175,12 +175,15 @@ class GridPainter
 
 		$size = $this->utomm() * .86;
 		$offsetInside = $this->utomm() * .07;
+		$color = $model ? $this->grid_config->model_color : $this->grid_config->stroke_color;
 
-		$this->pdf->WriteFixedPosHTML(view($model ? "templates.svg-stroke-model" : "templates.svg-stroke", $this->getSVGData(["strokes" => $column->getStrokes()])),
+		$this->pdf->WriteFixedPosHTML(
+			$this->generateStrokeHtml($column->getStrokes(), $color),
 			$this->bodyToGlobalX($column->getX()) + $offsetInside,
 			$this->bodyToGlobalY($column->getY()) + $offsetInside,
 			$size,
-			$size);
+			$size
+		);
 	}
 
 
@@ -233,10 +236,7 @@ class GridPainter
 				$strokes[] = $stroke;
 
 				$this->pdf->WriteFixedPosHTML(
-					view(
-						"templates.svg-stroke",
-						$this->getSVGData(["strokes" => $strokes, "strokeColor" => $this->grid_config->tutorial_color])
-					),
+					$this->generateStrokeHtml($strokes, $this->grid_config->tutorial_color),
 					$this->bodyToGlobalX() + ($index * $txt_size) + $offset + $offsetX,
 					$this->bodyToGlobalY($row->getY()) + $offset - $this->grid_config->getTutorialHeight(),
 					$txt_size,
@@ -360,6 +360,21 @@ class GridPainter
 		$this->pdf->autoMarginPadding = false;
 
 		return $this->pdf;
+	}
+
+
+	/**
+	 * Generate HTML for the given strokes and color
+	 *
+	 * @param array $strokes Array of strokes (svg format)
+	 * @param string $color Color of the strokes
+	 *
+	 * @return string The generated HTML
+	 * @throws Exception\ViewNotFoundException
+	 */
+	private function generateStrokeHtml(array $strokes, string $color): string
+	{
+		return view("templates.svg-stroke", $this->getSVGData(["strokes" => $strokes, "color" => $color]));
 	}
 
 
