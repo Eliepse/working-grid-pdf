@@ -61,15 +61,13 @@ class GridPainter
 
 	public function inlinePrint(): void
 	{
-		$this->paint();
-		$this->pdf->Output($this->workingGrid->title . '.pdf', Destination::INLINE);
+		$this->paint()->Output($this->workingGrid->title . '.pdf', Destination::INLINE);
 	}
 
 
 	public function download(): void
 	{
-		$this->paint();
-		$this->pdf->Output($this->workingGrid->title . '.pdf', Destination::DOWNLOAD);
+		$this->paint()->Output($this->workingGrid->title . '.pdf', Destination::DOWNLOAD);
 	}
 
 
@@ -88,7 +86,7 @@ class GridPainter
 
 		}
 
-		return new Mpdf();
+		return $this->pdf;
 	}
 
 
