@@ -61,15 +61,13 @@ class GridPainter
 
 	public function inlinePrint(): void
 	{
-		$this->paint();
-		$this->pdf->Output($this->workingGrid->title . '.pdf', Destination::INLINE);
+		$this->paint()->Output($this->workingGrid->title . '.pdf', Destination::INLINE);
 	}
 
 
 	public function download(): void
 	{
-		$this->paint();
-		$this->pdf->Output($this->workingGrid->title . '.pdf', Destination::DOWNLOAD);
+		$this->paint()->Output($this->workingGrid->title . '.pdf', Destination::DOWNLOAD);
 	}
 
 
@@ -88,13 +86,15 @@ class GridPainter
 
 		}
 
-		return new Mpdf();
+		$this->pdf->cleanup();
+
+		return $this->pdf;
 	}
 
 
 	private function drawPage(GridPage $page)
 	{
-		$this->pdf->AddPage();
+		$this->pdf->AddPage("P");
 
 		$page_info = new PageInfo($page->getPageNumber(), $this->workingGrid->getPageCount(), []);
 
@@ -336,16 +336,8 @@ class GridPainter
 	private function prepare(): Mpdf
 	{
 		$this->pdf = new Mpdf([
-			'fontDir' => [
-				resources_path("fonts/"),
-			],
-			'fontdata' => [
-				'sourcehansans' => [
-					'R' => 'SourceHanSansSC-Normal.ttf',
-					'B' => 'SourceHanSansSC-Bold.ttf',
-				],
-			],
-			'default_font' => 'sourcehansans',
+			'format' => 'A4',
+			'orientation' => 'P',
 		]);
 
 		$this->pdf->title = $this->workingGrid->title;

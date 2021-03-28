@@ -70,6 +70,10 @@ class Template
 	 */
 	public $paddings;
 
+	/**
+	 * @var string Default fonts
+	 */
+	public string $defaultFonts = "sun-exta, sans-serif";
 
 	public function generate(array $words = []): WorkingGrid
 	{

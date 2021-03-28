@@ -30,15 +30,5 @@
         "files" : [
             "src/helpers.php"
         ]
-    },
-    "scripts" : {
-        "release" : [
-            "git checkout master",
-            "git merge --ff develop",
-            "git checkout develop"
-        ]
-    },
-    "scripts-descriptions" : {
-        "release" : "Automatically merge the develop branch to the master branch."
     }
 }
