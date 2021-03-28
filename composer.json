@@ -30,8 +30,5 @@
         "files" : [
             "src/helpers.php"
         ]
-    },
-    "scripts-descriptions" : {
-        "release" : "Automatically merge the develop branch to the master branch."
     }
 }

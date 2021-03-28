@@ -21,8 +21,9 @@ class DefaultTemplate extends Template implements CustomizableHeader, Customizab
 
 	public function header(Mpdf $pdf, PageInfo $infos): void
 	{
+		$css = "font-family: {$this->defaultFonts}; text-align: center; font-size: 1.5em;";
 		$pdf->SetFontSize(16);
-		$pdf->Cell(210, 0, $this->title, false, false, 'C', 0, 0, 0, '', 'T', 'T');
+		$pdf->WriteHTML("<h1 style='$css'>{$this->title}</h1>");
 	}
 
 

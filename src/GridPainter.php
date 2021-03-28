@@ -86,6 +86,8 @@ class GridPainter
 
 		}
 
+		$this->pdf->cleanup();
+
 		return $this->pdf;
 	}
 
@@ -334,16 +336,6 @@ class GridPainter
 	private function prepare(): Mpdf
 	{
 		$this->pdf = new Mpdf([
-			'fontDir' => [
-				resources_path("fonts/"),
-			],
-			'fontdata' => [
-				'sourcehansans' => [
-					'R' => 'SourceHanSansSC-Normal.ttf',
-					'B' => 'SourceHanSansSC-Bold.ttf',
-				],
-			],
-			'default_font' => 'sourcehansans',
 			'format' => 'A4',
 			'orientation' => 'P',
 		]);
