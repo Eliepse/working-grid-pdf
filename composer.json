@@ -31,9 +31,6 @@
             "src/helpers.php"
         ]
     },
-    "scripts" : {
-        "serve": "php -S 127.0.0.1:88 -t public"
-    },
     "scripts-descriptions" : {
         "release" : "Automatically merge the develop branch to the master branch."
     }
