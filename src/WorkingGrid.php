@@ -43,7 +43,6 @@ class WorkingGrid implements \Iterator, \Countable
 	 *
 	 * @param string $title
 	 * @param GridConfig $grid_config
-	 * @param PageConfig $page_config
 	 * @param Template $template
 	 */
 	public function __construct(string $title, GridConfig $grid_config, Template $template)

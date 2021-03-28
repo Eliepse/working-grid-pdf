@@ -94,7 +94,7 @@ class GridPainter
 
 	private function drawPage(GridPage $page)
 	{
-		$this->pdf->AddPage();
+		$this->pdf->AddPage("P");
 
 		$page_info = new PageInfo($page->getPageNumber(), $this->workingGrid->getPageCount(), []);
 
@@ -346,6 +346,8 @@ class GridPainter
 				],
 			],
 			'default_font' => 'sourcehansans',
+			'format' => 'A4',
+			'orientation' => 'P',
 		]);
 
 		$this->pdf->title = $this->workingGrid->title;
